@@ -1,0 +1,65 @@
+2024-09-22 21:12:49.712 +01:00 [INF] Registered 5 endpoints in 534 milliseconds.
+2024-09-22 21:12:50.786 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+PRAGMA journal_mode = 'wal';
+2024-09-22 21:12:50.889 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE "Contributors" (
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Contributors" PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NOT NULL,
+    "Status" INTEGER NOT NULL,
+    "PhoneNumber_CountryCode" TEXT NULL,
+    "PhoneNumber_Number" TEXT NULL,
+    "PhoneNumber_Extension" TEXT NULL
+);
+2024-09-22 21:12:51.150 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Contributors" AS "c")
+2024-09-22 21:12:51.317 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 7), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Contributors" ("Name", "Status")
+VALUES (@p0, @p1)
+RETURNING "Id";
+2024-09-22 21:12:51.331 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 8), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Contributors" ("Name", "Status")
+VALUES (@p0, @p1)
+RETURNING "Id";
+2024-09-22 21:12:51.430 +01:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2024-09-22 21:12:51.451 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger - null null
+2024-09-22 21:12:51.518 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger/index.html - null null
+2024-09-22 21:12:51.526 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-22 21:12:51.527 +01:00 [INF] Hosting environment: Development
+2024-09-22 21:12:51.527 +01:00 [INF] Content root path: C:\Users\adzie\source\repos\CityPassGuide\src\CityPassGuide.Web
+2024-09-22 21:12:51.536 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger - 302 null null 83.5999ms
+2024-09-22 21:12:51.687 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger/index.html - 200 null text/html; charset=utf-8 168.8162ms
+2024-09-22 21:12:51.693 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger/swagger-ui.css - null null
+2024-09-22 21:12:51.695 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger/index.css - null null
+2024-09-22 21:12:51.695 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger/swagger-ui-bundle.js - null null
+2024-09-22 21:12:51.696 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger/swagger-ui-standalone-preset.js - null null
+2024-09-22 21:12:51.702 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/_framework/aspnetcore-browser-refresh.js - null null
+2024-09-22 21:12:51.707 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/_framework/aspnetcore-browser-refresh.js - 200 13770 application/javascript; charset=utf-8 4.3185ms
+2024-09-22 21:12:51.718 +01:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-09-22 21:12:51.720 +01:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-09-22 21:12:51.720 +01:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2024-09-22 21:12:51.720 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger/index.css - 200 218 text/css 25.4493ms
+2024-09-22 21:12:51.721 +01:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-09-22 21:12:51.732 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger/swagger-ui.css - 200 152073 text/css 39.1034ms
+2024-09-22 21:12:51.733 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger/swagger-ui-standalone-preset.js - 200 230294 text/javascript 36.6385ms
+2024-09-22 21:12:51.761 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger/swagger-ui-bundle.js - 200 1452754 text/javascript 65.3325ms
+2024-09-22 21:12:52.064 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger/v1/swagger.json - null null
+2024-09-22 21:12:52.286 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/swagger/favicon-32x32.png - null null
+2024-09-22 21:12:52.289 +01:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2024-09-22 21:12:52.290 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger/favicon-32x32.png - 200 628 image/png 3.708ms
+2024-09-22 21:12:52.895 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/swagger/v1/swagger.json - 200 null application/json; charset=utf-8 831.1907ms
+2024-09-22 21:15:06.031 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/Contributors - null null
+2024-09-22 21:15:06.035 +01:00 [WRN] Failed to determine the https port for redirect.
+2024-09-22 21:15:06.039 +01:00 [INF] Executing endpoint 'HTTP: GET /Contributors'
+2024-09-22 21:15:06.071 +01:00 [INF] Handling ListContributorsQuery
+2024-09-22 21:15:06.071 +01:00 [INF] Property Skip : null
+2024-09-22 21:15:06.071 +01:00 [INF] Property Take : null
+2024-09-22 21:15:06.141 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT Id, Name, PhoneNumber_Number AS PhoneNumber FROM Contributors
+2024-09-22 21:15:06.146 +01:00 [INF] Handled ListContributorsQuery with Ardalis.Result.Result`1[System.Collections.Generic.IEnumerable`1[CityPassGuide.UseCases.Contributors.ContributorDTO]] in 74 ms
+2024-09-22 21:15:06.153 +01:00 [INF] Executed endpoint 'HTTP: GET /Contributors'
+2024-09-22 21:15:06.157 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/Contributors - 200 null application/json 125.998ms
+2024-09-22 21:15:06.209 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:57678/favicon.ico - null null
+2024-09-22 21:15:06.212 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:57678/favicon.ico - 404 null null 3.3869ms
+2024-09-22 21:15:06.213 +01:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:57678/favicon.ico, Response status code: 404
