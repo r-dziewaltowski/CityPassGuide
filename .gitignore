@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /src/CityPassGuide.Web/database.sqlite-shm
 /src/CityPassGuide.Web/log20240922.txt
+/src/CityPassGuide.Web/database.sqlite
+/src/CityPassGuide.Web/database.sqlite-wal
+/src/CityPassGuide.Web/log20240923.txt
