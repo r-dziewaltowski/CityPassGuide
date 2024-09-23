@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Ardalis.SharedKernel;
-using CityPassGuide.Core.CityPassAggregate;
+using CityPassGuide.Core.CityCardAggregate;
 using CityPassGuide.Core.ContributorAggregate;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
 
-namespace CityPassGuide.Core.CityPassAggregate;
+namespace CityPassGuide.Core.CityCardAggregate;
 
 public class Attraction(string name, int cityId, decimal price) : EntityBase
 {

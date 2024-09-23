@@ -1,6 +1,6 @@
 ﻿using Ardalis.SharedKernel;
 
-namespace CityPassGuide.Core.CityPassAggregate;
+namespace CityPassGuide.Core.CityCardAggregate;
 
 public class DateRange : ValueObject
 {
@@ -13,7 +13,7 @@ public class DateRange : ValueObject
 
     if ((StartDate = startDate) > EndDate)
     {
-      throw new ArgumentException("startDate must be before or equal to endDate", nameof(startDate));    
+      throw new ArgumentException("startDate must be before or equal to endDate", nameof(startDate));
     }
   }
 
