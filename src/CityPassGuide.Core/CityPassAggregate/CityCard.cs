@@ -3,20 +3,22 @@ using Ardalis.SharedKernel;
 
 namespace CityPassGuide.Core.CityPassAggregate;
 
-public class CityCard(string name, City city, DateRange validityPeriod) : EntityBase, IAggregateRoot
+public class CityCard : EntityBase, IAggregateRoot
 {
-  // Example of validating primary constructor inputs
-  // See: https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#initialize-base-class
-  public string Name { get; private set; } = Guard.Against.NullOrEmpty(name, nameof(name));
-  public City City { get; } = city;
-  public DateRange ValidityPeriod { get; private set; } = validityPeriod;
-  //public ContributorStatus Status { get; private set; } = ContributorStatus.NotSet;
-  //public PhoneNumber? PhoneNumber { get; private set; }
+  public string Name { get; private set; }
+  public City City { get; private set; }
+  public DateRange ValidityPeriod { get; private set; }
 
-  //public void SetPhoneNumber(string phoneNumber)
-  //{
-  //  PhoneNumber = new PhoneNumber(string.Empty, phoneNumber, string.Empty);
-  //}
+  public CityCard(string name, City city, DateRange validityPeriod)
+  {
+    Name = Guard.Against.NullOrEmpty(name, nameof(name));
+    City = city;
+    ValidityPeriod = validityPeriod;
+  }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+  private CityCard() { } // EF required
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
   public void UpdateName(string newName)
   {
@@ -28,25 +30,3 @@ public class CityCard(string name, City city, DateRange validityPeriod) : Entity
     ValidityPeriod = newValidityPeriod;
   }
 }
-
-//public class PhoneNumber : ValueObject
-//{
-//  public string CountryCode { get; private set; } = string.Empty;
-//  public string Number { get; private set; } = string.Empty;
-//  public string? Extension { get; private set; } = string.Empty;
-
-//  public PhoneNumber(string countryCode,
-//    string number,
-//    string? extension)
-//  {
-//    CountryCode = countryCode;
-//    Number = number;
-//    Extension = extension;
-//  }
-//  protected override IEnumerable<object> GetEqualityComponents()
-//  {
-//    yield return CountryCode;
-//    yield return Number;
-//    yield return Extension ?? String.Empty;
-//  }
-//}

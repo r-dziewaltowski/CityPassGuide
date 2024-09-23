@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Ardalis.SharedKernel;
+using CityPassGuide.Core.CityPassAggregate;
 using CityPassGuide.Core.ContributorAggregate;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,9 @@ public class AppDbContext : DbContext
   }
 
   public DbSet<Contributor> Contributors => Set<Contributor>();
+  public DbSet<CityCard> CityCards => Set<CityCard>();
+  public DbSet<Country> Countries => Set<Country>();
+  public DbSet<City> Cities => Set<City>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

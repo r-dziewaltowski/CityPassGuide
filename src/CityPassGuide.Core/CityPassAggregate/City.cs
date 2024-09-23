@@ -1,12 +1,25 @@
 ﻿using Ardalis.GuardClauses;
+using Ardalis.SharedKernel;
 
 namespace CityPassGuide.Core.CityPassAggregate;
 
-public class City(string name, Country country, decimal dailyTransportCost)
+public class City : EntityBase
 {
-  public string Name { get; private set; } = name;
-  public Country Country { get; } = country;
-  public decimal DailyTransportCost { get; private set; } = Guard.Against.Negative(dailyTransportCost);
+  public City(string name, int countryId, decimal dailyTransportCost)
+  {
+    Name = name;
+    CountryId = countryId;
+    DailyTransportCost = Guard.Against.Negative(dailyTransportCost);
+  }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+  private City() { } // EF required
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+
+  public string Name { get; private set; }
+  //public Country Country { get; } = country;
+  public int CountryId { get; private set; }
+  public decimal DailyTransportCost { get; private set; }
 
   public void UpdateDailyTransportCost(decimal newDailyTransportCost)
   {
