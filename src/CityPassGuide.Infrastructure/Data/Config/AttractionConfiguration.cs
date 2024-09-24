@@ -12,7 +12,11 @@ public class AttractionConfiguration : IEntityTypeConfiguration<Attraction>
       .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
       .IsRequired();
 
-    builder.HasIndex(p => p.Name)
+    builder.HasIndex(p => new
+      {
+        p.CityId,
+        p.Name
+      })
       .IsUnique();
   }
 }

@@ -12,7 +12,11 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
       .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
       .IsRequired();
 
-    builder.HasIndex(p => p.Name)
+    builder.HasIndex(p => new
+      {
+        p.CountryId,
+        p.Name
+      })
       .IsUnique();
   }
 }

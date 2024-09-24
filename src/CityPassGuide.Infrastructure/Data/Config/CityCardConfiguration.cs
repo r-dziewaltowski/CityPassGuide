@@ -14,7 +14,11 @@ public class CityCardConfiguration : IEntityTypeConfiguration<CityCard>
 
     builder.OwnsOne(builder => builder.ValidityPeriod);
 
-    builder.HasIndex(p => p.Name)
+    builder.HasIndex(p => new
+      {
+        p.CityId,
+        p.Name
+      })
       .IsUnique();
   }
 }
