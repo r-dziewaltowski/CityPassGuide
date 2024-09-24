@@ -11,5 +11,8 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
     builder.Property(p => p.Name)
       .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
       .IsRequired();
+
+    builder.HasIndex(p => p.Name)
+      .IsUnique();
   }
 }

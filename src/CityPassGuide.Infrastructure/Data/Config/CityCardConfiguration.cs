@@ -13,5 +13,8 @@ public class CityCardConfiguration : IEntityTypeConfiguration<CityCard>
       .IsRequired();
 
     builder.OwnsOne(builder => builder.ValidityPeriod);
+
+    builder.HasIndex(p => p.Name)
+      .IsUnique();
   }
 }
