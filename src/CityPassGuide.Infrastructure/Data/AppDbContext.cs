@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
   public DbSet<CityCard> CityCards => Set<CityCard>();
   public DbSet<Country> Countries => Set<Country>();
   public DbSet<City> Cities => Set<City>();
+  public DbSet<Attraction> Attractions => Set<Attraction>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

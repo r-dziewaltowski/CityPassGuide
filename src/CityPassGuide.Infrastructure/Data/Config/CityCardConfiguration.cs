@@ -12,7 +12,7 @@ public class CityCardConfiguration : IEntityTypeConfiguration<CityCard>
       .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
       .IsRequired();
 
-    builder.OwnsOne(builder => builder.ValidityPeriod);
+    builder.OwnsOne(p => p.ValidityPeriod);
 
     builder.HasIndex(p => new
       {
@@ -20,5 +20,11 @@ public class CityCardConfiguration : IEntityTypeConfiguration<CityCard>
         p.Name
       })
       .IsUnique();
+
+    builder.HasMany(e => e.Attractions)
+      .WithMany(e => e.CityCards)
+      .UsingEntity(
+        l => l.HasOne(typeof(Attraction)).WithMany().OnDelete(DeleteBehavior.Restrict),
+        r => r.HasOne(typeof(CityCard)).WithMany().OnDelete(DeleteBehavior.Restrict));
   }
 }

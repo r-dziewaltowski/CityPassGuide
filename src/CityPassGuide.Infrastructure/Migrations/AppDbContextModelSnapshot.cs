@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CityPassGuide.Infrastructure.Data.Migrations
+namespace CityPassGuide.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -17,13 +17,25 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.Attraction", b =>
+            modelBuilder.Entity("AttractionCityCard", b =>
+                {
+                    b.Property<int>("AttractionsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CityCardsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AttractionsId", "CityCardsId");
+
+                    b.HasIndex("CityCardsId");
+
+                    b.ToTable("AttractionCityCard");
+                });
+
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.Attraction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("CityCardId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CityId")
@@ -39,14 +51,13 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityCardId");
+                    b.HasIndex("CityId", "Name")
+                        .IsUnique();
 
-                    b.HasIndex("CityId");
-
-                    b.ToTable("Attraction", (string)null);
+                    b.ToTable("Attractions");
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.City", b =>
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,12 +76,13 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryId", "Name")
+                        .IsUnique();
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.CityCard", b =>
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.CityCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,12 +104,13 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CityId", "Name")
+                        .IsUnique();
 
-                    b.ToTable("CityCards", (string)null);
+                    b.ToTable("CityCards");
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.Country", b =>
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +123,10 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("CityPassGuide.Core.ContributorAggregate.Contributor", b =>
@@ -129,40 +145,51 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contributors", (string)null);
+                    b.ToTable("Contributors");
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.Attraction", b =>
+            modelBuilder.Entity("AttractionCityCard", b =>
                 {
-                    b.HasOne("CityPassGuide.Core.CityPassAggregate.CityCard", null)
-                        .WithMany("Attractions")
-                        .HasForeignKey("CityCardId");
+                    b.HasOne("CityPassGuide.Core.CityCardAggregate.Attraction", null)
+                        .WithMany()
+                        .HasForeignKey("AttractionsId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasOne("CityPassGuide.Core.CityPassAggregate.City", null)
+                    b.HasOne("CityPassGuide.Core.CityCardAggregate.CityCard", null)
+                        .WithMany()
+                        .HasForeignKey("CityCardsId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.Attraction", b =>
+                {
+                    b.HasOne("CityPassGuide.Core.CityCardAggregate.City", null)
                         .WithMany("Attractions")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.City", b =>
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.City", b =>
                 {
-                    b.HasOne("CityPassGuide.Core.CityPassAggregate.Country", null)
+                    b.HasOne("CityPassGuide.Core.CityCardAggregate.Country", null)
                         .WithMany("Cities")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.CityCard", b =>
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.CityCard", b =>
                 {
-                    b.HasOne("CityPassGuide.Core.CityPassAggregate.City", null)
+                    b.HasOne("CityPassGuide.Core.CityCardAggregate.City", null)
                         .WithMany("CityCards")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("CityPassGuide.Core.CityPassAggregate.CityCard.ValidityPeriod#CityPassGuide.Core.CityPassAggregate.DateRange", "ValidityPeriod", b1 =>
+                    b.OwnsOne("CityPassGuide.Core.CityCardAggregate.DateRange", "ValidityPeriod", b1 =>
                         {
                             b1.Property<int>("CityCardId")
                                 .HasColumnType("INTEGER");
@@ -175,7 +202,7 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
                             b1.HasKey("CityCardId");
 
-                            b1.ToTable("CityCards", (string)null);
+                            b1.ToTable("CityCards");
 
                             b1.WithOwner()
                                 .HasForeignKey("CityCardId");
@@ -187,7 +214,7 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("CityPassGuide.Core.ContributorAggregate.Contributor", b =>
                 {
-                    b.OwnsOne("CityPassGuide.Core.ContributorAggregate.Contributor.PhoneNumber#CityPassGuide.Core.ContributorAggregate.PhoneNumber", "PhoneNumber", b1 =>
+                    b.OwnsOne("CityPassGuide.Core.ContributorAggregate.PhoneNumber", "PhoneNumber", b1 =>
                         {
                             b1.Property<int>("ContributorId")
                                 .HasColumnType("INTEGER");
@@ -205,7 +232,7 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
 
                             b1.HasKey("ContributorId");
 
-                            b1.ToTable("Contributors", (string)null);
+                            b1.ToTable("Contributors");
 
                             b1.WithOwner()
                                 .HasForeignKey("ContributorId");
@@ -214,19 +241,14 @@ namespace CityPassGuide.Infrastructure.Data.Migrations
                     b.Navigation("PhoneNumber");
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.City", b =>
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.City", b =>
                 {
                     b.Navigation("Attractions");
 
                     b.Navigation("CityCards");
                 });
 
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.CityCard", b =>
-                {
-                    b.Navigation("Attractions");
-                });
-
-            modelBuilder.Entity("CityPassGuide.Core.CityPassAggregate.Country", b =>
+            modelBuilder.Entity("CityPassGuide.Core.CityCardAggregate.Country", b =>
                 {
                     b.Navigation("Cities");
                 });
