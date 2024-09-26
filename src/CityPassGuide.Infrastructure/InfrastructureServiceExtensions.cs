@@ -17,13 +17,15 @@ public static class InfrastructureServiceExtensions
   public static IServiceCollection AddInfrastructureServices(
     this IServiceCollection services,
     ConfigurationManager config,
-    ILogger logger)
+    ILogger logger,
+    bool isDevelopment)
   {
     string? connectionString = config.GetConnectionString("SqliteConnection");
     Guard.Against.Null(connectionString);
     services.AddDbContext<AppDbContext>(options =>
      options.UseSqlite(connectionString)
-      .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+      .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+      .EnableSensitiveDataLogging(isDevelopment));
 
     services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
     services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
