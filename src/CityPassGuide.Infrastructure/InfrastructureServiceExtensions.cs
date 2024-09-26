@@ -22,7 +22,8 @@ public static class InfrastructureServiceExtensions
     string? connectionString = config.GetConnectionString("SqliteConnection");
     Guard.Against.Null(connectionString);
     services.AddDbContext<AppDbContext>(options =>
-     options.UseSqlite(connectionString));
+     options.UseSqlite(connectionString)
+      .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
     services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
     services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
