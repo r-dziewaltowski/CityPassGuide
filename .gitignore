@@ -361,12 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Web app log and DB files
 /src/CityPassGuide.Web/database.sqlite-shm
-/src/CityPassGuide.Web/log20240922.txt
 /src/CityPassGuide.Web/database.sqlite
 /src/CityPassGuide.Web/database.sqlite-wal
-/src/CityPassGuide.Web/log20240923.txt
-/src/CityPassGuide.Web/log20240924.txt
-/src/CityPassGuide.Web/log20240925.txt
-/src/CityPassGuide.Web/log20240926.txt
-/src/CityPassGuide.Web/log20240927.txt
+/src/CityPassGuide.Web/log*.txt
+
