@@ -3,7 +3,7 @@ using Ardalis.SharedKernel;
 
 namespace CityPassGuide.Core.CityCardAggregate;
 
-public class Country(string name) : EntityBase
+public class Country(string name) : EntityBase, IAggregateRoot
 {
   public string Name { get; private set; } = Guard.Against.NullOrEmpty(name, nameof(name));
 
