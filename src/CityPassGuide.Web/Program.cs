@@ -10,6 +10,7 @@ using CityPassGuide.UseCases.Contributors.Create;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -78,26 +79,27 @@ app.UseFastEndpoints()
 
 app.UseHttpsRedirection();
 
-await SeedDatabase(app);
+ApplyMigrations(app);
 
 app.Run();
 
-static async Task SeedDatabase(WebApplication app)
+static void ApplyMigrations(WebApplication app)
 {
   using var scope = app.Services.CreateScope();
   var services = scope.ServiceProvider;
+  var context = services.GetRequiredService<AppDbContext>();
 
   try
   {
-    var context = services.GetRequiredService<AppDbContext>();
-    //          context.Database.Migrate();
-    context.Database.EnsureCreated();
-    await SeedData.InitializeAsync(context);
+    // In a real-world application migrations would be applied from generated SQL scripts
+    // rather than from the code but for the purpose of this application
+    // it's just convenient to apply migrations on startup
+    context.Database.Migrate();
   }
   catch (Exception ex)
   {
     var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error occurred seeding the DB. {exceptionMessage}", ex.Message);
+    logger.LogError(ex, "An error occurred when applying migrations. {exceptionMessage}", ex.Message);
   }
 }
 
