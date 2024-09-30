@@ -7,6 +7,7 @@ using CityPassGuide.Infrastructure;
 using CityPassGuide.Infrastructure.Data;
 using CityPassGuide.Infrastructure.Email;
 using CityPassGuide.UseCases.Contributors.Create;
+using CityPassGuide.UseCases.Profiles;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using MediatR;
@@ -60,6 +61,8 @@ else
 {
   builder.Services.AddScoped<IEmailSender, MimeKitEmailSender>();
 }
+
+builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(CountryProfile)));
 
 var app = builder.Build();
 

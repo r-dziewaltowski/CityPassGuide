@@ -5,18 +5,21 @@ using FluentAssertions;
 using NSubstitute;
 using Xunit;
 using Ardalis.Result;
+using AutoMapper;
+using CityPassGuide.UseCases.Countries;
 
 namespace CityPassGuide.UnitTests.UseCases.Countries;
 
 public class GetCountryHandlerTests
 {
   private readonly IReadRepository<Country> _repository = Substitute.For<IReadRepository<Country>>();
+  private readonly IMapper _mapper = Substitute.For<IMapper>();
 
   [Fact]
-  public async Task Handle_ShouldCallGetByIdAsyncWithCorrectArguments()
+  public async Task Handle_ShouldGetCountryFromRepository()
   {
     // Arrange
-    var handler = new GetCountryHandler(_repository);
+    var handler = new GetCountryHandler(_repository, _mapper);
     var request = new GetCountryQuery(1);
     var cancellationToken = new CancellationToken();
 
@@ -28,10 +31,10 @@ public class GetCountryHandlerTests
   }
 
   [Fact]
-  public async Task Handle_ShouldReturnNotFound_WhenNoResult()
+  public async Task Handle_ShouldReturnNotFound_WhenNoCountryFound()
   {
     // Arrange
-    var handler = new GetCountryHandler(_repository);
+    var handler = new GetCountryHandler(_repository, _mapper);
     var request = new GetCountryQuery(1);
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
       .Returns((Country?)null);
@@ -44,21 +47,40 @@ public class GetCountryHandlerTests
   }
 
   [Fact]
-  public async Task Handle_ShouldReturnDto_WhenResultFound()
+  public async Task Handle_ShouldMapEntityToDto()
   {
     // Arrange
-    var handler = new GetCountryHandler(_repository);
-    var country = new Country("test_name");
+    var handler = new GetCountryHandler(_repository, _mapper);
     var request = new GetCountryQuery(1);
+    var entity = new Country("test_name");
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
-      .Returns(country);
+      .Returns(entity);
+
+    // Act
+    await handler.Handle(request, CancellationToken.None);
+
+    // Assert
+    _mapper.Received().Map<CountryDto>(entity);
+  }
+
+  [Fact]
+  public async Task Handle_ShouldReturnExpectedResult_WhenCountryFound()
+  {
+    // Arrange
+    var handler = new GetCountryHandler(_repository, _mapper);
+    var request = new GetCountryQuery(1);
+    var entity = new Country("test_name");
+    _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
+      .Returns(entity);
+    var dto = new CountryDto(1, "test_name");
+    _mapper.Map<CountryDto>(Arg.Any<Country>()).Returns(dto);
 
     // Act
     var result = await handler.Handle(request, CancellationToken.None);
 
     // Assert
     result.IsSuccess.Should().BeTrue();
-    result.Value.Id.Should().Be(country.Id);
-    result.Value.Name.Should().Be(country.Name);
+    result.Value.Id.Should().Be(dto.Id);
+    result.Value.Name.Should().Be(dto.Name);
   }
 }
