@@ -10,7 +10,7 @@ using CityPassGuide.UseCases.Countries;
 
 namespace CityPassGuide.UnitTests.UseCases.Countries;
 
-public class GetCountryHandlerTests
+public class GetCountryByIdHandlerTests
 {
   private readonly IReadRepository<Country> _repository = Substitute.For<IReadRepository<Country>>();
   private readonly IMapper _mapper = Substitute.For<IMapper>();
@@ -19,8 +19,8 @@ public class GetCountryHandlerTests
   public async Task Handle_ShouldGetCountryFromRepository()
   {
     // Arrange
-    var handler = new GetCountryHandler(_repository, _mapper);
-    var request = new GetCountryQuery(1);
+    var handler = new GetCountryByIdHandler(_repository, _mapper);
+    var request = new GetCountryByIdQuery(1);
     var cancellationToken = new CancellationToken();
 
     // Act
@@ -34,8 +34,8 @@ public class GetCountryHandlerTests
   public async Task Handle_ShouldReturnNotFound_WhenNoCountryFound()
   {
     // Arrange
-    var handler = new GetCountryHandler(_repository, _mapper);
-    var request = new GetCountryQuery(1);
+    var handler = new GetCountryByIdHandler(_repository, _mapper);
+    var request = new GetCountryByIdQuery(1);
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
       .Returns((Country?)null);
 
@@ -50,8 +50,8 @@ public class GetCountryHandlerTests
   public async Task Handle_ShouldMapEntityToDto()
   {
     // Arrange
-    var handler = new GetCountryHandler(_repository, _mapper);
-    var request = new GetCountryQuery(1);
+    var handler = new GetCountryByIdHandler(_repository, _mapper);
+    var request = new GetCountryByIdQuery(1);
     var entity = new Country("test_name");
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
       .Returns(entity);
@@ -67,8 +67,8 @@ public class GetCountryHandlerTests
   public async Task Handle_ShouldReturnExpectedResult_WhenCountryFound()
   {
     // Arrange
-    var handler = new GetCountryHandler(_repository, _mapper);
-    var request = new GetCountryQuery(1);
+    var handler = new GetCountryByIdHandler(_repository, _mapper);
+    var request = new GetCountryByIdQuery(1);
     var entity = new Country("test_name");
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
       .Returns(entity);

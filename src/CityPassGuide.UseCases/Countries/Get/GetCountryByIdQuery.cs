@@ -3,4 +3,4 @@ using Ardalis.SharedKernel;
 
 namespace CityPassGuide.UseCases.Countries.Get;
 
-public record GetCountryQuery(int Id) : IQuery<Result<CountryDto>>;
+public record GetCountryByIdQuery(int Id) : IQuery<Result<CountryDto>>;

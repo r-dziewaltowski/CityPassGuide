@@ -5,10 +5,10 @@ using CityPassGuide.Core.CityCardAggregate;
 
 namespace CityPassGuide.UseCases.Countries.Get;
 
-public class GetCountryHandler(IReadRepository<Country> _repository, IMapper mapper)
-  : IQueryHandler<GetCountryQuery, Result<CountryDto>>
+public class GetCountryByIdHandler(IReadRepository<Country> _repository, IMapper mapper)
+  : IQueryHandler<GetCountryByIdQuery, Result<CountryDto>>
 {
-  public async Task<Result<CountryDto>> Handle(GetCountryQuery request, CancellationToken cancellationToken)
+  public async Task<Result<CountryDto>> Handle(GetCountryByIdQuery request, CancellationToken cancellationToken)
   {
     var result = await _repository.GetByIdAsync(request.Id, cancellationToken);
     if (result == null) return Result.NotFound();
