@@ -24,7 +24,9 @@ public class ListCountries(IMediator _mediator) : EndpointWithoutRequest<ListCou
 
   public override async Task HandleAsync(CancellationToken cancellationToken)
   {
-    Result<IEnumerable<CountryDto>> result = await _mediator.Send(new ListCountriesQuery(null, null), cancellationToken);
+    Result<IEnumerable<CountryDto>> result = await _mediator.Send(
+      new ListCountriesQuery(), 
+      cancellationToken);
 
     if (result.IsSuccess)
     {

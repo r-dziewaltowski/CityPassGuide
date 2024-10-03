@@ -6,6 +6,8 @@ using Xunit;
 using CityPassGuide.UseCases.Countries.List;
 using AutoMapper;
 using CityPassGuide.UseCases.Countries;
+using Ardalis.Specification;
+using CityPassGuide.Core.CityCardAggregate.Specifications;
 
 namespace CityPassGuide.UnitTests.UseCases.Countries;
 
@@ -19,14 +21,16 @@ public class ListCountriesHandlerTests
   {
     // Arrange
     var handler = new ListCountriesHandler(_repository, _mapper);
-    var request = new ListCountriesQuery(null, null);
+    var request = new ListCountriesQuery();
     var cancellationToken = new CancellationToken();
 
     // Act
     await handler.Handle(request, cancellationToken);
 
     // Assert
-    await _repository.Received().ListAsync(cancellationToken);
+    await _repository.Received().ListAsync(
+      Arg.Any<ListCountriesSpec>(), 
+      cancellationToken);
   }
 
   [Fact]
@@ -34,10 +38,11 @@ public class ListCountriesHandlerTests
   {
     // Arrange
     var handler = new ListCountriesHandler(_repository, _mapper);
-    var request = new ListCountriesQuery(null, null);
+    var request = new ListCountriesQuery();
     var cancellationToken = new CancellationToken();
     var entities = new List<Country>();
-    _repository.ListAsync(Arg.Any<CancellationToken>()).Returns(entities);
+    _repository.ListAsync(Arg.Any<ListCountriesSpec>(), Arg.Any<CancellationToken>())
+      .Returns(entities);
 
     // Act
     await handler.Handle(request, cancellationToken);
@@ -51,7 +56,7 @@ public class ListCountriesHandlerTests
   {
     // Arrange
     var handler = new ListCountriesHandler(_repository, _mapper);
-    var request = new ListCountriesQuery(null, null);
+    var request = new ListCountriesQuery();
     var dtos = new List<CountryDto>()
     {
       new(1, "test_name1"),
