@@ -1,8 +1,8 @@
 ﻿using Ardalis.Result;
 using Ardalis.SharedKernel;
 using AutoMapper;
-using CityPassGuide.Core.CityCardAggregate;
-using CityPassGuide.Core.CityCardAggregate.Specifications;
+using CityPassGuide.Core.CityPassAggregate;
+using CityPassGuide.Core.CityPassAggregate.Specifications;
 
 namespace CityPassGuide.UseCases.Countries.List;
 

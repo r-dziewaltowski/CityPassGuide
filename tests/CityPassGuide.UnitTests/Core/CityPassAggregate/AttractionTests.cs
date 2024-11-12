@@ -1,7 +1,7 @@
-﻿using CityPassGuide.Core.CityCardAggregate;
-using Xunit;
+﻿using Xunit;
+using CityPassGuide.Core.CityPassAggregate;
 
-namespace CityPassGuide.UnitTests.Core.CityCardAggregate;
+namespace CityPassGuide.UnitTests.Core.CityPassAggregate;
 public class AttractionTests
 {
   private const string Name = "London Eye";

@@ -1,12 +1,12 @@
-﻿using CityPassGuide.Core.CityCardAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Infrastructure.Data.Config;
 
-public class CityCardConfiguration : IEntityTypeConfiguration<CityCard>
+public class CityPassConfiguration : IEntityTypeConfiguration<CityPass>
 {
-  public void Configure(EntityTypeBuilder<CityCard> builder)
+  public void Configure(EntityTypeBuilder<CityPass> builder)
   {
     builder.Property(p => p.Name)
       .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
@@ -22,9 +22,9 @@ public class CityCardConfiguration : IEntityTypeConfiguration<CityCard>
       .IsUnique();
 
     builder.HasMany(e => e.Attractions)
-      .WithMany(e => e.CityCards)
+      .WithMany(e => e.CityPasses)
       .UsingEntity(
         l => l.HasOne(typeof(Attraction)).WithMany().OnDelete(DeleteBehavior.Restrict),
-        r => r.HasOne(typeof(CityCard)).WithMany().OnDelete(DeleteBehavior.Restrict));
+        r => r.HasOne(typeof(CityPass)).WithMany().OnDelete(DeleteBehavior.Restrict));
   }
 }

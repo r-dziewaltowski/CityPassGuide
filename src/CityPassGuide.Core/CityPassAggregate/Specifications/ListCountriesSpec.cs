@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
+using CityPassGuide.Core.CityPassAggregate;
 
-namespace CityPassGuide.Core.CityCardAggregate.Specifications;
+namespace CityPassGuide.Core.CityPassAggregate.Specifications;
 
 public class ListCountriesSpec : Specification<Country>
 {

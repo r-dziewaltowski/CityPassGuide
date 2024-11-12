@@ -1,12 +1,12 @@
 ﻿using Ardalis.SharedKernel;
-using CityPassGuide.Core.CityCardAggregate;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;
 using CityPassGuide.UseCases.Countries.List;
 using AutoMapper;
 using CityPassGuide.UseCases.Countries;
-using CityPassGuide.Core.CityCardAggregate.Specifications;
+using CityPassGuide.Core.CityPassAggregate;
+using CityPassGuide.Core.CityPassAggregate.Specifications;
 
 namespace CityPassGuide.UnitTests.UseCases.Countries;
 

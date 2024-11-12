@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CityPassGuide.Core.CityCardAggregate;
 using CityPassGuide.UseCases.Countries;
 using FluentAssertions;
 using Xunit;
+using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.UnitTests.UseCases.Profiles;
 public class CountryProfileTests

@@ -1,6 +1,6 @@
-﻿using CityPassGuide.Core.CityCardAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Infrastructure.Data.Config;
 

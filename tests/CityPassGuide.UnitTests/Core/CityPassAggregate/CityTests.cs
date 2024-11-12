@@ -1,7 +1,7 @@
-﻿using CityPassGuide.Core.CityCardAggregate;
+﻿using CityPassGuide.Core.CityPassAggregate;
 using Xunit;
 
-namespace CityPassGuide.UnitTests.Core.CityCardAggregate;
+namespace CityPassGuide.UnitTests.Core.CityPassAggregate;
 public class CityTests
 {
   private const string Name = "Edinburgh";

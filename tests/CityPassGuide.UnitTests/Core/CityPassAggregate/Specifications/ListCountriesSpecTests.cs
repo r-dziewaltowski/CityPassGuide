@@ -1,8 +1,8 @@
-﻿using CityPassGuide.Core.CityCardAggregate.Specifications;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
+using CityPassGuide.Core.CityPassAggregate.Specifications;
 
-namespace CityPassGuide.UnitTests.Core.CityCardAggregate.Specifications;
+namespace CityPassGuide.UnitTests.Core.CityPassAggregate.Specifications;
 
 public class ListCountriesSpecTests
 {

@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
 
-namespace CityPassGuide.Core.CityCardAggregate;
+namespace CityPassGuide.Core.CityPassAggregate;
 
 public class Country(string name) : EntityBase, IAggregateRoot
 {

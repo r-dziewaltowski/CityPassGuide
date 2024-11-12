@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Ardalis.SharedKernel;
-using CityPassGuide.Core.CityCardAggregate;
 using CityPassGuide.Core.ContributorAggregate;
 using Microsoft.EntityFrameworkCore;
+using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Infrastructure.Data;
 public class AppDbContext : DbContext
@@ -17,7 +17,7 @@ public class AppDbContext : DbContext
   }
 
   public DbSet<Contributor> Contributors => Set<Contributor>();
-  public DbSet<CityCard> CityCards => Set<CityCard>();
+  public DbSet<CityPass> CityPasses => Set<CityPass>();
   public DbSet<Country> Countries => Set<Country>();
   public DbSet<City> Cities => Set<City>();
   public DbSet<Attraction> Attractions => Set<Attraction>();

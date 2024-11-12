@@ -1,4 +1,4 @@
-﻿using CityPassGuide.Core.CityCardAggregate;
+﻿using CityPassGuide.Core.CityPassAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,6 +1,6 @@
 ﻿using Ardalis.SharedKernel;
 
-namespace CityPassGuide.Core.CityCardAggregate;
+namespace CityPassGuide.Core.CityPassAggregate;
 
 public class DateRange : ValueObject
 {

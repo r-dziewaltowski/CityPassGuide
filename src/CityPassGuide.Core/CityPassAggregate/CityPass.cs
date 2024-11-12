@@ -1,9 +1,10 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
+using CityPassGuide.Core.CityPassAggregate;
 
-namespace CityPassGuide.Core.CityCardAggregate;
+namespace CityPassGuide.Core.CityPassAggregate;
 
-public class CityCard : EntityBase
+public class CityPass : EntityBase
 {
   public string Name { get; private set; }
   public int CityId { get; private set; }
@@ -14,7 +15,7 @@ public class CityCard : EntityBase
   private readonly List<Attraction> _attractions = [];
   public IEnumerable<Attraction> Attractions => _attractions.AsReadOnly();
 
-  public CityCard(string name,
+  public CityPass(string name,
                   int cityId,
                   DateRange validityPeriod,
                   int durationInDays,
@@ -35,6 +36,6 @@ public class CityCard : EntityBase
   }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-  private CityCard() { } // EF required
+  private CityPass() { } // EF required
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 }

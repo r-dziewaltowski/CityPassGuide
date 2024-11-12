@@ -1,7 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
+using CityPassGuide.Core.CityPassAggregate;
 
-namespace CityPassGuide.Core.CityCardAggregate;
+namespace CityPassGuide.Core.CityPassAggregate;
 
 public class City(string name, int countryId, decimal dailyTransportCost) : EntityBase
 {
@@ -9,8 +10,8 @@ public class City(string name, int countryId, decimal dailyTransportCost) : Enti
   public int CountryId { get; private set; } = Guard.Against.NegativeOrZero(countryId);
   public decimal DailyTransportCost { get; private set; } = Guard.Against.Negative(dailyTransportCost);
 
-  private readonly List<CityCard> _cityCards = [];
-  public IEnumerable<CityCard> CityCards => _cityCards.AsReadOnly();
+  private readonly List<CityPass> _cityPasses = [];
+  public IEnumerable<CityPass> CityPasses => _cityPasses.AsReadOnly();
 
   private readonly List<Attraction> _attractions = [];
   public IEnumerable<Attraction> Attractions => _attractions.AsReadOnly();

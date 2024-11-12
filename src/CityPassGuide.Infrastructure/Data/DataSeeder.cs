@@ -1,5 +1,5 @@
-﻿using CityPassGuide.Core.CityCardAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Infrastructure.Data;
 
@@ -34,7 +34,7 @@ public static class DataSeeder
                                               louvreMuseum, eiffelTower, arcDeTriomphe,
                                               wawelCastle, sukiennice, mariackiChurch);
 
-    modelBuilder.Entity<CityCard>(e =>
+    modelBuilder.Entity<CityPass>(e =>
     {
       e.HasData(
         new
@@ -66,66 +66,66 @@ public static class DataSeeder
       e.OwnsOne(e => e.ValidityPeriod).HasData(
         new
         {
-          CityCardId = 1,
+          CityPassId = 1,
           StartDate = startDate,
           EndDate = DateOnly.MaxValue,
         },
         new
         {
-          CityCardId = 2,
+          CityPassId = 2,
           StartDate = startDate,
           EndDate = DateOnly.MaxValue,
         },
         new
         {
-          CityCardId = 3,
+          CityPassId = 3,
           StartDate = startDate,
           EndDate = new DateOnly(2024, 12, 31),
         });
     });
 
-    modelBuilder.Entity<CityCard>()
+    modelBuilder.Entity<CityPass>()
       .HasMany(e => e.Attractions)
-      .WithMany(e => e.CityCards)
+      .WithMany(e => e.CityPasses)
       .UsingEntity(e => e.HasData(
         new
         {
-          CityCardsId = 1,
+          CityPassesId = 1,
           AttractionsId = 1
         },
         new
         {
-          CityCardsId = 1,
+          CityPassesId = 1,
           AttractionsId = 2
         },
         new
         {
-          CityCardsId = 1,
+          CityPassesId = 1,
           AttractionsId = 3
         },
         new
         {
-          CityCardsId = 2,
+          CityPassesId = 2,
           AttractionsId = 4
         },
         new
         {
-          CityCardsId = 2,
+          CityPassesId = 2,
           AttractionsId = 5
         },
         new
         {
-          CityCardsId = 3,
+          CityPassesId = 3,
           AttractionsId = 7
         },
         new
         {
-          CityCardsId = 3,
+          CityPassesId = 3,
           AttractionsId = 8
         },
         new
         {
-          CityCardsId = 3,
+          CityPassesId = 3,
           AttractionsId = 9
         }));
   }
