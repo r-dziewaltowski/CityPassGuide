@@ -17,7 +17,7 @@ public class ListCountriesTests(CustomWebApplicationFactory<Program> factory)
     CreateAndSeedDatabase(factory);
 
     // Act
-    var result = await _client.GetAndDeserializeAsync<ListCountriesResponse>(ListCountries.Route);
+    var result = await _client.GetAndDeserializeAsync<ListCountriesResponse>(ListCountriesRequest.Route);
 
     // Assert
     result.Countries.Should().HaveCount(3);

@@ -6,7 +6,6 @@ using Xunit;
 using CityPassGuide.UseCases.Countries.List;
 using AutoMapper;
 using CityPassGuide.UseCases.Countries;
-using Ardalis.Specification;
 using CityPassGuide.Core.CityCardAggregate.Specifications;
 
 namespace CityPassGuide.UnitTests.UseCases.Countries;
