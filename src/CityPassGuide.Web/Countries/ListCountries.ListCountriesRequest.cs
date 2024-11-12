@@ -3,13 +3,8 @@
 public class ListCountriesRequest
 {
   public const string Route = "/Countries";
-
-  public static string BuildRoute(int pageNumber, int pageSize)
-  {
-    return Route
-      .Replace("{PageNumber:int}", pageNumber.ToString())
-      .Replace("{PageSize:int}", pageSize.ToString());
-  }
+  public const string PageNumberParamName = nameof(PageNumber);
+  public const string PageSizeParamName = nameof(PageSize);
 
   public int? PageNumber { get; set; }
 

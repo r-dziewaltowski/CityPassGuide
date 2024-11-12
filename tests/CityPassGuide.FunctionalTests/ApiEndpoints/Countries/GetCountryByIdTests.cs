@@ -1,7 +1,7 @@
-﻿using Ardalis.HttpClientTestExtensions;
-using CityPassGuide.UseCases.Countries;
+﻿using CityPassGuide.UseCases.Countries;
 using CityPassGuide.Web.Countries;
 using FluentAssertions;
+using RestSharp;
 using Xunit;
 
 namespace CityPassGuide.FunctionalTests.ApiEndpoints.Countries;
@@ -16,10 +16,10 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
   {
     // Arrange
     CreateAndSeedDatabase(factory);
-    var route = GetCountryByIdRequest.BuildRoute(1);
+    var request = CreateRequest(1);
 
     // Act
-    var result = await _client.GetAndDeserializeAsync<CountryDto>(route);
+    var result = await _client.GetAndDeserializeAsync<CountryDto>(request);
 
     // Assert
     result.Id.Should().Be(1);
@@ -31,9 +31,15 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
   {
     // Arrange
     CreateAndSeedDatabase(factory);
-    var route = GetCountryByIdRequest.BuildRoute(1000);
+    var request = CreateRequest(1000);
 
     // Act + Assert
-    _ = await _client.GetAndEnsureNotFoundAsync(route);
+    _ = await _client.GetAndEnsureNotFoundAsync(request);
+  }
+
+  private static RestRequest CreateRequest(int countryId)
+  {
+    return new RestRequest(GetCountryByIdRequest.Route)
+      .AddUrlSegment(GetCountryByIdRequest.CountryIdParamName, countryId);
   }
 }

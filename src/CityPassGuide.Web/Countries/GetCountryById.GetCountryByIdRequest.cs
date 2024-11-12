@@ -2,8 +2,8 @@
 
 public class GetCountryByIdRequest
 {
-  public const string Route = "/Countries/{CountryId:int}";
-  public static string BuildRoute(int countryId) => Route.Replace("{CountryId:int}", countryId.ToString());
+  public const string Route = $"/Countries/{{{CountryIdParamName}}}";
+  public const string CountryIdParamName = nameof(CountryId);
 
   public int CountryId { get; set; }
 }
