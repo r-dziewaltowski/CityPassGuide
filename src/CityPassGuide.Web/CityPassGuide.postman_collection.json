@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "20855214-7ade-4ec0-a439-5d0df4589af9",
+		"name": "CityPassGuide",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8868880"
+	},
+	"item": [
+		{
+			"name": "Countries",
+			"item": [
+				{
+					"name": "ListCountries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/countries",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCountryById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/countries/{{countryId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"countries",
+								"{{countryId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:57678",
+			"type": "default"
+		},
+		{
+			"key": "countryId",
+			"value": "1",
+			"type": "default"
+		}
+	]
+}
