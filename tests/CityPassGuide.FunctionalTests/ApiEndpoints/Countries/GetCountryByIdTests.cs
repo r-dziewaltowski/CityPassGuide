@@ -12,6 +12,17 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
   private readonly HttpClient _client = factory.CreateClient();
 
   [Fact]
+  public async Task ValidatesId()
+  {
+    // Arrange
+    var request = CreateRequest(0);
+
+    // Act + Assert
+    await Assert.ThrowsAsync<HttpRequestException>(
+      () => _client.GetAndDeserializeAsync<CountryDto>(request));
+  }
+
+  [Fact]
   public async Task ReturnsSeedCountryGivenId1()
   {
     // Arrange
@@ -34,7 +45,7 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
     var request = CreateRequest(1000);
 
     // Act + Assert
-    _ = await _client.GetAndEnsureNotFoundAsync(request);
+    await _client.GetAndEnsureNotFoundAsync(request);
   }
 
   private static RestRequest CreateRequest(int countryId)

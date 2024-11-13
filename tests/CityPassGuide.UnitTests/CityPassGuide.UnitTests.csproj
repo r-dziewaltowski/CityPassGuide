@@ -39,6 +39,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\CityPassGuide.Core\CityPassGuide.Core.csproj" />
     <ProjectReference Include="..\..\src\CityPassGuide.UseCases\CityPassGuide.UseCases.csproj" />
+    <ProjectReference Include="..\..\src\CityPassGuide.Web\CityPassGuide.Web.csproj" />
   </ItemGroup>
 
 </Project>
