@@ -6,11 +6,9 @@ using Xunit;
 
 namespace CityPassGuide.FunctionalTests.ApiEndpoints.Countries;
 
-public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory) 
-  : TestsBase, IClassFixture<CustomWebApplicationFactory<Program>>
+public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
+  : TestsBase(factory), IClassFixture<CustomWebApplicationFactory<Program>>
 {
-  private readonly HttpClient _client = factory.CreateClient();
-
   [Fact]
   public async Task ValidatesId()
   {
@@ -18,7 +16,7 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
     var request = CreateRequest(0);
 
     // Act
-    var act = () => _client.GetAndDeserializeAsync<CountryDto>(request);
+    var act = () => Client.GetAndDeserializeAsync<CountryDto>(request);
 
     // Assert
     await act.Should().ThrowAsync<HttpRequestException>();
@@ -28,11 +26,10 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
   public async Task ReturnsSeedCountryGivenId1()
   {
     // Arrange
-    CreateAndSeedDatabase(factory);
     var request = CreateRequest(1);
 
     // Act
-    var result = await _client.GetAndDeserializeAsync<CountryDto>(request);
+    var result = await Client.GetAndDeserializeAsync<CountryDto>(request);
 
     // Assert
     result.Id.Should().Be(1);
@@ -43,11 +40,10 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
   public async Task ReturnsNotFoundGivenId1000()
   {
     // Arrange
-    CreateAndSeedDatabase(factory);
     var request = CreateRequest(1000);
 
     // Act + Assert
-    await _client.GetAndEnsureNotFoundAsync(request);
+    await Client.GetAndEnsureNotFoundAsync(request);
   }
 
   private static RestRequest CreateRequest(int countryId)

@@ -6,7 +6,15 @@ namespace CityPassGuide.FunctionalTests.ApiEndpoints;
 
 public class TestsBase
 {
-  protected static void CreateAndSeedDatabase(WebApplicationFactory<Program> factory)
+  protected readonly HttpClient Client;
+
+  public TestsBase(CustomWebApplicationFactory<Program> factory)
+  {
+    Client = factory.CreateClient();
+    CreateAndSeedDatabase(factory);
+  }
+
+  private static void CreateAndSeedDatabase(WebApplicationFactory<Program> factory)
   {
     using var scope = factory.Services.CreateScope();
     var scopedServices = scope.ServiceProvider;

@@ -6,19 +6,16 @@ using Xunit;
 namespace CityPassGuide.FunctionalTests.ApiEndpoints.Countries;
 
 public class ListCountriesTests(CustomWebApplicationFactory<Program> factory) 
-  : TestsBase, IClassFixture<CustomWebApplicationFactory<Program>>
+  : TestsBase(factory), IClassFixture<CustomWebApplicationFactory<Program>>
 {
-  private readonly HttpClient _client = factory.CreateClient();
-
   [Fact]
   public async Task ReturnsAllCountries()
   {
     // Arrange
-    CreateAndSeedDatabase(factory);
     var request = CreateRequest();
 
     // Act
-    var result = await _client.GetAndDeserializeAsync<ListCountriesResponse>(request);
+    var result = await Client.GetAndDeserializeAsync<ListCountriesResponse>(request);
 
     // Assert
     result.Countries.Should().HaveCount(3);
@@ -28,13 +25,12 @@ public class ListCountriesTests(CustomWebApplicationFactory<Program> factory)
   public async Task ReturnsOnePage()
   {
     // Arrange
-    CreateAndSeedDatabase(factory);
     var request = CreateRequest()
       .AddParameter(ListCountriesRequest.PageNumberParamName, 2)
       .AddParameter(ListCountriesRequest.PageSizeParamName, 1);
 
     // Act
-    var result = await _client.GetAndDeserializeAsync<ListCountriesResponse>(request);
+    var result = await Client.GetAndDeserializeAsync<ListCountriesResponse>(request);
 
     // Assert
     result.Countries.Should().HaveCount(1);
