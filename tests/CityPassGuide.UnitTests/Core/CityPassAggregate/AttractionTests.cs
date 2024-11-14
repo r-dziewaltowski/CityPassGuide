@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using CityPassGuide.Core.CityPassAggregate;
+using FluentAssertions;
 
 namespace CityPassGuide.UnitTests.Core.CityPassAggregate;
 public class AttractionTests
@@ -15,16 +16,19 @@ public class AttractionTests
     var attraction = new Attraction(Name, CityId, Price);
 
     // Assert
-    Assert.Equal(Name, attraction.Name);
-    Assert.Equal(CityId, attraction.CityId);
-    Assert.Equal(Price, attraction.Price);
+    attraction.Name.Should().Be(Name);
+    attraction.CityId.Should().Be(CityId);
+    attraction.Price.Should().Be(Price);
   }
 
   [Fact]
   public void Constructor_ShouldThrow_WhenNameEmpty()
   {
-    // Act + Assert
-    Assert.Throws<ArgumentException>(() => new Attraction("", CityId, Price));
+    // Act
+    var act = () => new Attraction("", CityId, Price);
+
+    // Assert
+    act.Should().Throw<ArgumentException>();
   }
 
   [Theory]
@@ -32,14 +36,20 @@ public class AttractionTests
   [InlineData(0)]
   public void Constructor_ShouldThrow_WhenCityIdIsIncorrect(int cityId)
   {
-    // Act + Assert
-    Assert.Throws<ArgumentException>(() => new Attraction(Name, cityId, Price));
+    // Act
+    var act = () => new Attraction(Name, cityId, Price);
+
+    // Assert
+    act.Should().Throw<ArgumentException>();
   }
 
   [Fact]
   public void Constructor_ShouldThrow_WhenPriceIsNegative()
   {
-    // Act + Assert
-    Assert.Throws<ArgumentException>(() => new Attraction(Name, CityId, -1));
+    // Act
+    var act = () => new Attraction(Name, CityId, -1);
+
+    // Assert
+    act.Should().Throw<ArgumentException>();
   }
 }

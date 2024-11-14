@@ -1,4 +1,5 @@
 ﻿using CityPassGuide.Core.CityPassAggregate;
+using FluentAssertions;
 using Xunit;
 
 namespace CityPassGuide.UnitTests.Core.CityPassAggregate;
@@ -12,19 +13,22 @@ public class CityTests
   public void Constructor_ShouldSetProperties()
   {
     // Act
-    var country = new City(Name, CountryId, DailyTransportCost);
+    var city = new City(Name, CountryId, DailyTransportCost);
 
     // Assert
-    Assert.Equal(Name, country.Name);
-    Assert.Equal(CountryId, country.CountryId);
-    Assert.Equal(DailyTransportCost, country.DailyTransportCost);
+    city.Name.Should().Be(Name);
+    city.CountryId.Should().Be(CountryId);
+    city.DailyTransportCost.Should().Be(DailyTransportCost);
   }
 
   [Fact]
   public void Constructor_ShouldThrow_WhenNameEmpty()
   {
-    // Act + Assert
-    Assert.Throws<ArgumentException>(() => new City("", CountryId, DailyTransportCost));
+    // Act
+    var act = () => new City("", CountryId, DailyTransportCost);
+
+    // Assert
+    act.Should().Throw<ArgumentException>();
   }
 
   [Theory]
@@ -32,14 +36,20 @@ public class CityTests
   [InlineData(0)]
   public void Constructor_ShouldThrow_WhenCountryIdIsIncorrect(int countryId)
   {
-    // Act + Assert
-    Assert.Throws<ArgumentException>(() => new City(Name, countryId, DailyTransportCost));
+    // Act
+    var act = () => new City(Name, countryId, DailyTransportCost);
+
+    // Assert
+    act.Should().Throw<ArgumentException>();
   }
 
   [Fact]
   public void Constructor_ShouldThrow_WhenPriceIsNegative()
   {
-    // Act + Assert
-    Assert.Throws<ArgumentException>(() => new City(Name, CountryId, -1));
+    // Act
+    var act = () => new City(Name, CountryId, -1);
+
+    // Assert
+    act.Should().Throw<ArgumentException>();
   }
 }

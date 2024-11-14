@@ -17,9 +17,11 @@ public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
     // Arrange
     var request = CreateRequest(0);
 
-    // Act + Assert
-    await Assert.ThrowsAsync<HttpRequestException>(
-      () => _client.GetAndDeserializeAsync<CountryDto>(request));
+    // Act
+    var act = () => _client.GetAndDeserializeAsync<CountryDto>(request);
+
+    // Assert
+    await act.Should().ThrowAsync<HttpRequestException>();
   }
 
   [Fact]

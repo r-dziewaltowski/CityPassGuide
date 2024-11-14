@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using CityPassGuide.Core.CityPassAggregate;
+using FluentAssertions;
 
 namespace CityPassGuide.UnitTests.Core.CityPassAggregate;
 public class CountryTests
@@ -13,13 +14,16 @@ public class CountryTests
     var country = new Country(Name);
 
     // Assert
-    Assert.Equal(Name, country.Name);
+    country.Name.Should().Be(Name);
   }
 
   [Fact]
   public void Constructor_ShouldThrow_WhenNameEmpty()
   {
-    // Act + Assert
-    Assert.Throws<ArgumentException>(() => new Country(""));
+    // Act
+    var act = () => new Country("");
+
+    // Assert
+    act.Should().Throw<ArgumentException>();
   }
 }
