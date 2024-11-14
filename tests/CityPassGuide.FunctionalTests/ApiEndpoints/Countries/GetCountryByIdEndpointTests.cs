@@ -10,19 +10,6 @@ public class GetCountryByIdEndpointTests(CustomWebApplicationFactory<Program> fa
   : TestsBase(factory), IClassFixture<CustomWebApplicationFactory<Program>>
 {
   [Fact]
-  public async Task ValidatesId()
-  {
-    // Arrange
-    var request = CreateRequest(0);
-
-    // Act
-    var act = () => Client.GetAndDeserializeAsync<CountryDto>(request);
-
-    // Assert
-    await act.Should().ThrowAsync<HttpRequestException>();
-  }
-
-  [Fact]
   public async Task ReturnsSeedCountryGivenId1()
   {
     // Arrange

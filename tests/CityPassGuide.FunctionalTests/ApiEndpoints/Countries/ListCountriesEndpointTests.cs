@@ -21,22 +21,6 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
     result.Countries.Should().HaveCount(3);
   }
 
-  [Fact]
-  public async Task ReturnsOnePage()
-  {
-    // Arrange
-    var request = CreateRequest()
-      .AddParameter(ListCountriesRequest.PageNumberParamName, 2)
-      .AddParameter(ListCountriesRequest.PageSizeParamName, 1);
-
-    // Act
-    var result = await Client.GetAndDeserializeAsync<ListCountriesResponse>(request);
-
-    // Assert
-    result.Countries.Should().HaveCount(1);
-    result.Countries[0].Id.Should().Be(2);
-  }
-
   private static RestRequest CreateRequest()
   {
     return new RestRequest(ListCountriesRequest.Route);

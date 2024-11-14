@@ -9,7 +9,7 @@ using CityPassGuide.UseCases.Countries;
 using System.Net;
 using FastEndpoints;
 
-namespace CityPassGuide.UnitTests.Web.Countries;
+namespace CityPassGuide.UnitTests.Web.Countries.GetCountryById;
 
 public class GetCountryByIdEndpointTests
 {
