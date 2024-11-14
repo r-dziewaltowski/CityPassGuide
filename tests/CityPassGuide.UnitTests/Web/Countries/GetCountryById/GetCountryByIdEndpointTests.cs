@@ -16,7 +16,7 @@ public class GetCountryByIdEndpointTests
   private readonly IMediator _mediator = Substitute.For<IMediator>();
 
   [Fact]
-  public async Task HandleAsync_ShouldSendQueryViaMediator()
+  public async Task HandleAsync_ShouldSendQueryViaMediatorWithCorrectParams()
   {
     // Arrange
     var endpoint = CreateEndpoint();
@@ -54,7 +54,7 @@ public class GetCountryByIdEndpointTests
   }
 
   [Fact]
-  public async Task HandleAsync_ShouldReturnCorrectResponse_WhenCountryFound()
+  public async Task HandleAsync_ShouldReturnCorrectResponse_WhenSuccessfulResult()
   {
     // Arrange
     var endpoint = CreateEndpoint();

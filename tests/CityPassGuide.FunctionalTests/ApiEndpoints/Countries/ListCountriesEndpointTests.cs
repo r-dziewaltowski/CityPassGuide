@@ -9,7 +9,7 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
   : TestsBase(factory), IClassFixture<CustomWebApplicationFactory<Program>>
 {
   [Fact]
-  public async Task ReturnsAllCountries()
+  public async Task Endpoint_ShouldReturnAllCountries()
   {
     // Arrange
     var request = CreateRequest();

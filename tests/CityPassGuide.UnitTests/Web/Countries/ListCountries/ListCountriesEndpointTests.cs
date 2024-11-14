@@ -37,7 +37,7 @@ public class ListCountriesEndpointTests
   }
 
   [Fact]
-  public async Task HandleAsync_ShouldReturnCorrectResponse_WhenSuccess()
+  public async Task HandleAsync_ShouldReturnCorrectResponse_WhenSuccessfulResult()
   {
     // Arrange
     var endpoint = CreateEndpoint();

@@ -2,13 +2,15 @@
 
 namespace CityPassGuide.UnitTests.UseCases.Profiles;
 
-public class AutoMapperConfigurationTests
+public class AutoMapperConfigTests
 {
   [Fact]
-  public void CreateValidMappingConfiguration()
+  public void Initialize_ShouldCreateValidConfiguration()
   {
+    // Act
     var mapper = AutoMapperConfig.Initialize();
 
+    // Assert
     mapper.ConfigurationProvider.AssertConfigurationIsValid();
   }
 }

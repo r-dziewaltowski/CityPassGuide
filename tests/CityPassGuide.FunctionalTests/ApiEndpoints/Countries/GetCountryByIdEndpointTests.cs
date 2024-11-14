@@ -10,7 +10,7 @@ public class GetCountryByIdEndpointTests(CustomWebApplicationFactory<Program> fa
   : TestsBase(factory), IClassFixture<CustomWebApplicationFactory<Program>>
 {
   [Fact]
-  public async Task ReturnsSeedCountryGivenId1()
+  public async Task Endpoint_ShouldReturnSeedCountryGivenId1()
   {
     // Arrange
     var request = CreateRequest(1);
@@ -24,7 +24,7 @@ public class GetCountryByIdEndpointTests(CustomWebApplicationFactory<Program> fa
   }
 
   [Fact]
-  public async Task ReturnsNotFoundGivenId1000()
+  public async Task Endpoint_ShouldReturnNotFoundGivenId1000()
   {
     // Arrange
     var request = CreateRequest(1000);
