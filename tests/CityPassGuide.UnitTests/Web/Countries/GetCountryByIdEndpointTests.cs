@@ -11,7 +11,7 @@ using FastEndpoints;
 
 namespace CityPassGuide.UnitTests.Web.Countries;
 
-public class GetCountryByIdTests
+public class GetCountryByIdEndpointTests
 {
   private readonly IMediator _mediator = Substitute.For<IMediator>();
 
@@ -70,8 +70,8 @@ public class GetCountryByIdTests
     endpoint.Response.Should().Be(result);
   }
 
-  private GetCountryById CreateEndpoint()
+  private GetCountryByIdEndpoint CreateEndpoint()
   {
-    return Factory.Create<GetCountryById>(_mediator);
+    return Factory.Create<GetCountryByIdEndpoint>(_mediator);
   }
 }

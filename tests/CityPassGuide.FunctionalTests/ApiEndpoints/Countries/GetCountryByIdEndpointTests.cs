@@ -6,7 +6,7 @@ using Xunit;
 
 namespace CityPassGuide.FunctionalTests.ApiEndpoints.Countries;
 
-public class GetCountryByIdTests(CustomWebApplicationFactory<Program> factory)
+public class GetCountryByIdEndpointTests(CustomWebApplicationFactory<Program> factory)
   : TestsBase(factory), IClassFixture<CustomWebApplicationFactory<Program>>
 {
   [Fact]

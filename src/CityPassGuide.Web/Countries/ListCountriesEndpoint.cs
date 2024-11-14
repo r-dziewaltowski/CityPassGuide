@@ -12,7 +12,7 @@ namespace CityPassGuide.Web.Countries;
 /// <remarks>
 /// List all countries - returns a CountryListResponse containing the countries.
 /// </remarks>
-public class ListCountries(IMediator mediator) : Endpoint<ListCountriesRequest, ListCountriesResponse>
+public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesRequest, ListCountriesResponse>
 {
   private const int DefaultPageNumber = 1;
   private const int DefaultPageSize = 10;
