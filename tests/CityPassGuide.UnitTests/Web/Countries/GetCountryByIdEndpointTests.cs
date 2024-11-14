@@ -24,9 +24,10 @@ public class GetCountryByIdEndpointTests
     {
       CountryId = 1
     };
+    var result = new CountryDto(1, "TestName");
     var cancellationToken = new CancellationToken();
     _mediator.Send(Arg.Any<GetCountryByIdQuery>(), cancellationToken)
-      .Returns(new Result());
+      .Returns(result);
 
     // Act
     await endpoint.HandleAsync(request, cancellationToken);
@@ -53,7 +54,7 @@ public class GetCountryByIdEndpointTests
   }
 
   [Fact]
-  public async Task HandleAsync_ShouldReturnExpectedResult_WhenCountryFound()
+  public async Task HandleAsync_ShouldReturnCorrectResponse_WhenCountryFound()
   {
     // Arrange
     var endpoint = CreateEndpoint();
