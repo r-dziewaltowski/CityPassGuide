@@ -3,5 +3,5 @@ using Ardalis.SharedKernel;
 
 namespace CityPassGuide.UseCases.Countries.List;
 
-public record ListCountriesQuery(int PageNumber = 1, int PageSize = 10) 
+public record ListCountriesQuery(int PageNumber, int PageSize) 
   : IQuery<Result<IEnumerable<CountryDto>>>;

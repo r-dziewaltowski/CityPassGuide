@@ -19,8 +19,8 @@ public class ListCountriesHandlerTests
   public async Task Handle_ShouldGetCountriesFromRepository()
   {
     // Arrange
-    var handler = new ListCountriesHandler(_repository, _mapper);
-    var request = new ListCountriesQuery();
+    var handler = CreateHandler();
+    var request = CreateQuery();
     var cancellationToken = new CancellationToken();
 
     // Act
@@ -28,7 +28,7 @@ public class ListCountriesHandlerTests
 
     // Assert
     await _repository.Received().ListAsync(
-      Arg.Any<ListCountriesSpec>(), 
+      Arg.Any<ListCountriesSpec>(),
       cancellationToken);
   }
 
@@ -36,15 +36,14 @@ public class ListCountriesHandlerTests
   public async Task Handle_ShouldMapEntitiesToDtos()
   {
     // Arrange
-    var handler = new ListCountriesHandler(_repository, _mapper);
-    var request = new ListCountriesQuery();
-    var cancellationToken = new CancellationToken();
+    var handler = CreateHandler();
+    var request = CreateQuery();
     var entities = new List<Country>();
     _repository.ListAsync(Arg.Any<ListCountriesSpec>(), Arg.Any<CancellationToken>())
       .Returns(entities);
 
     // Act
-    await handler.Handle(request, cancellationToken);
+    await handler.Handle(request, default);
 
     // Assert
     _mapper.Received().Map<IEnumerable<CountryDto>>(entities);
@@ -54,8 +53,8 @@ public class ListCountriesHandlerTests
   public async Task Handle_ShouldReturnExpectedResult()
   {
     // Arrange
-    var handler = new ListCountriesHandler(_repository, _mapper);
-    var request = new ListCountriesQuery();
+    var handler = CreateHandler();
+    var request = CreateQuery();
     var dtos = new List<CountryDto>()
     {
       new(1, "test_name1"),
@@ -64,10 +63,20 @@ public class ListCountriesHandlerTests
     _mapper.Map<IEnumerable<CountryDto>>(Arg.Any<List<Country>>()).Returns(dtos);
 
     // Act
-    var result = await handler.Handle(request, CancellationToken.None);
+    var result = await handler.Handle(request, default);
 
     // Assert
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().HaveCount(2);
+  }
+
+  private static ListCountriesQuery CreateQuery()
+  {
+    return new ListCountriesQuery(1, 5);
+  }
+
+  private ListCountriesHandler CreateHandler()
+  {
+    return new ListCountriesHandler(_repository, _mapper);
   }
 }
