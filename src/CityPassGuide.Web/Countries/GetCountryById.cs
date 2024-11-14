@@ -12,9 +12,10 @@ namespace CityPassGuide.Web.Countries;
 /// <remarks>
 /// Takes a positive integer ID and returns a matching Country DTO.
 /// </remarks>
-public class GetCountryById(IMediator _mediator)
-  : Endpoint<GetCountryByIdRequest, CountryDto>
+public class GetCountryById(IMediator mediator) : Endpoint<GetCountryByIdRequest, CountryDto>
 {
+  private readonly IMediator _mediator = mediator;
+
   public override void Configure()
   {
     Get(GetCountryByIdRequest.Route);

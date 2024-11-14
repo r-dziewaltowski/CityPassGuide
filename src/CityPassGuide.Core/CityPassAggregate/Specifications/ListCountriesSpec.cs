@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Core.CityPassAggregate.Specifications;
 

@@ -1,6 +1,5 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
-using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Core.CityPassAggregate;
 
