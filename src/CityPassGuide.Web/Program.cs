@@ -64,6 +64,8 @@ else
 
 builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(CountryProfile)));
 
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -109,10 +111,10 @@ static void ApplyMigrations(WebApplication app)
 void ConfigureMediatR()
 {
   var mediatRAssemblies = new[]
-{
-  Assembly.GetAssembly(typeof(Contributor)), // Core
-  Assembly.GetAssembly(typeof(CreateContributorCommand)) // UseCases
-};
+  {
+    Assembly.GetAssembly(typeof(Contributor)), // Core
+    Assembly.GetAssembly(typeof(CreateContributorCommand)) // UseCases
+  };
   builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies!));
   builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
   builder.Services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();

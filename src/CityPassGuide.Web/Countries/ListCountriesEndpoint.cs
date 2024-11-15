@@ -24,15 +24,18 @@ public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesR
 
   public override async Task HandleAsync(ListCountriesRequest request, CancellationToken cancellationToken)
   {
-    var pageNumber = request.GetAdjustedPageNumber();
-    var pageSize = request.GetAdjustedPageSize();
-    var query = new ListCountriesQuery(pageNumber, pageSize);
+    await Task.CompletedTask;
+    throw new Exception();
 
-    Result<IEnumerable<CountryDto>> result = await _mediator.Send(query, cancellationToken);
+    //var pageNumber = request.GetAdjustedPageNumber();
+    //var pageSize = request.GetAdjustedPageSize();
+    //var query = new ListCountriesQuery(pageNumber, pageSize);
 
-    if (result.IsSuccess)
-    {
-      Response = result.Value;
-    }
+    //Result<IEnumerable<CountryDto>> result = await _mediator.Send(query, cancellationToken);
+
+    //if (result.IsSuccess)
+    //{
+    //  Response = result.Value;
+    //}
   }
 }
