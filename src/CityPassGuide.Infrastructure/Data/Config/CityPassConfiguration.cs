@@ -9,7 +9,7 @@ public class CityPassConfiguration : IEntityTypeConfiguration<CityPass>
   public void Configure(EntityTypeBuilder<CityPass> builder)
   {
     builder.Property(p => p.Name)
-      .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
+      .HasMaxLength(DataSchemaConstants.DefaultNameLength)
       .IsRequired();
 
     builder.OwnsOne(p => p.ValidityPeriod);

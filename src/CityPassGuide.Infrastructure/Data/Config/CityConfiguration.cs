@@ -9,7 +9,7 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
   public void Configure(EntityTypeBuilder<City> builder)
   {
     builder.Property(p => p.Name)
-      .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
+      .HasMaxLength(DataSchemaConstants.DefaultNameLength)
       .IsRequired();
 
     builder.HasIndex(p => new

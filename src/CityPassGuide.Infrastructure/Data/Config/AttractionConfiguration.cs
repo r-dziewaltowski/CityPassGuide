@@ -9,7 +9,7 @@ public class AttractionConfiguration : IEntityTypeConfiguration<Attraction>
   public void Configure(EntityTypeBuilder<Attraction> builder)
   {
     builder.Property(p => p.Name)
-      .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH)
+      .HasMaxLength(DataSchemaConstants.DefaultNameLength)
       .IsRequired();
 
     builder.HasIndex(p => new
