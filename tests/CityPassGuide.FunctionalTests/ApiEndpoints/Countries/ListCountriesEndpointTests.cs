@@ -1,4 +1,5 @@
-﻿using CityPassGuide.Web.Countries;
+﻿using CityPassGuide.UseCases.Countries;
+using CityPassGuide.Web.Countries;
 using FluentAssertions;
 using RestSharp;
 using Xunit;
@@ -15,10 +16,10 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
     var request = CreateRequest();
 
     // Act
-    var result = await Client.GetAndDeserializeAsync<ListCountriesResponse>(request);
+    var result = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
 
     // Assert
-    result.Countries.Should().HaveCount(3);
+    result.Should().HaveCount(3);
   }
 
   private static RestRequest CreateRequest()

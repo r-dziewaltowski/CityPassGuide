@@ -12,7 +12,7 @@ namespace CityPassGuide.Web.Countries;
 /// <remarks>
 /// List all countries - returns a CountryListResponse containing the countries.
 /// </remarks>
-public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesRequest, ListCountriesResponse>
+public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesRequest, IEnumerable<CountryDto>>
 {
   private readonly IMediator _mediator = mediator;
 
@@ -32,10 +32,7 @@ public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesR
 
     if (result.IsSuccess)
     {
-      Response = new ListCountriesResponse
-      {
-        Countries = result.Value.ToList()
-      };
+      Response = result.Value;
     }
   }
 }

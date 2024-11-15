@@ -55,7 +55,7 @@ public class ListCountriesEndpointTests
 
     // Assert
     endpoint.HttpContext.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
-    endpoint.Response.Countries.Should().HaveCount(2);
+    endpoint.Response.Should().HaveCount(2);
   }
 
   private ListCountriesEndpoint CreateEndpoint()
