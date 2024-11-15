@@ -27,7 +27,7 @@ public class GetCountryByIdHandlerTests
     await handler.Handle(request, cancellationToken);
 
     // Assert
-    await _repository.Received().GetByIdAsync(request.Id, cancellationToken);
+    await _repository.Received().GetByIdAsync(request.CountryId, cancellationToken);
   }
 
   [Fact]

@@ -34,7 +34,7 @@ public class GetCountryByIdEndpointTests
 
     // Assert
     await _mediator.Received()
-      .Send(Arg.Is<GetCountryByIdQuery>(query => query.Id == request.CountryId), cancellationToken);
+      .Send(Arg.Is<GetCountryByIdQuery>(query => query.CountryId == request.CountryId), cancellationToken);
   }
 
   [Fact]

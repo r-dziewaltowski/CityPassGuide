@@ -13,7 +13,7 @@ public class GetCountryByIdHandler(IReadRepository<Country> repository, IMapper 
 
   public async Task<Result<CountryDto>> Handle(GetCountryByIdQuery request, CancellationToken cancellationToken)
   {
-    var result = await _repository.GetByIdAsync(request.Id, cancellationToken);
+    var result = await _repository.GetByIdAsync(request.CountryId, cancellationToken);
     if (result == null) return Result.NotFound();
 
     return _mapper.Map<CountryDto>(result);
