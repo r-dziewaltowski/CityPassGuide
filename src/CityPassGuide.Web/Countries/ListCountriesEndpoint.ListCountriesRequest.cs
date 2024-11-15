@@ -2,7 +2,7 @@
 
 public class ListCountriesRequest
 {
-  public const string Route = $"{EndpointConstants.ApiRoot}/countries";
+  public const string Route = "/countries";
   public const string PageNumberParamName = nameof(PageNumber);
   public const string PageSizeParamName = nameof(PageSize);
 
