@@ -39,6 +39,11 @@ builder.Services.AddFastEndpoints()
                 .SwaggerDocument(o =>
                 {
                   o.ShortSchemaNames = true;
+                  o.DocumentSettings = s =>
+                  {
+                    s.Title = "City Pass Guide API";
+                    s.Version = "v1";
+                  };
                 });
 
 ConfigureMediatR();

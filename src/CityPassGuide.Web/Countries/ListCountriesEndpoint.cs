@@ -7,10 +7,10 @@ using MediatR;
 namespace CityPassGuide.Web.Countries;
 
 /// <summary>
-/// List all Countries
+/// List countries
 /// </summary>
 /// <remarks>
-/// List all countries - returns a CountryListResponse containing the countries.
+/// Returns a single page of countries.
 /// </remarks>
 public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesRequest, IEnumerable<CountryDto>>
 {
@@ -20,22 +20,21 @@ public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesR
   {
     Get(ListCountriesRequest.Route);
     AllowAnonymous();
+    Description(b => b
+      .ProducesProblemFE<InternalErrorResponse>(500));
   }
 
   public override async Task HandleAsync(ListCountriesRequest request, CancellationToken cancellationToken)
   {
-    await Task.CompletedTask;
-    throw new Exception();
+    var pageNumber = request.GetAdjustedPageNumber();
+    var pageSize = request.GetAdjustedPageSize();
+    var query = new ListCountriesQuery(pageNumber, pageSize);
 
-    //var pageNumber = request.GetAdjustedPageNumber();
-    //var pageSize = request.GetAdjustedPageSize();
-    //var query = new ListCountriesQuery(pageNumber, pageSize);
+    Result<IEnumerable<CountryDto>> result = await _mediator.Send(query, cancellationToken);
 
-    //Result<IEnumerable<CountryDto>> result = await _mediator.Send(query, cancellationToken);
-
-    //if (result.IsSuccess)
-    //{
-    //  Response = result.Value;
-    //}
+    if (result.IsSuccess)
+    {
+      Response = result.Value;
+    }
   }
 }

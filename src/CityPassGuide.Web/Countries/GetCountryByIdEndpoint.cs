@@ -7,10 +7,10 @@ using MediatR;
 namespace CityPassGuide.Web.Countries;
 
 /// <summary>
-/// Get a Country by integer ID.
+/// Get a country by ID
 /// </summary>
 /// <remarks>
-/// Takes a positive integer ID and returns a matching Country DTO.
+/// Takes a positive integer ID and returns a matching country DTO.
 /// </remarks>
 public class GetCountryByIdEndpoint(IMediator mediator) : Endpoint<GetCountryByIdRequest, CountryDto>
 {
@@ -20,6 +20,9 @@ public class GetCountryByIdEndpoint(IMediator mediator) : Endpoint<GetCountryByI
   {
     Get(GetCountryByIdRequest.Route);
     AllowAnonymous();
+    Description(b => b
+      .Produces(404)
+      .ProducesProblemFE<InternalErrorResponse>(500));
   }
 
   public override async Task HandleAsync(GetCountryByIdRequest request,
