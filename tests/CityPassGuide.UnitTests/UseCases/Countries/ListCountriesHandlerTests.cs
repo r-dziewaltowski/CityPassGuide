@@ -33,6 +33,21 @@ public class ListCountriesHandlerTests
   }
 
   [Fact]
+  public async Task Handle_ShouldGetTotalItemCountFromRepository()
+  {
+    // Arrange
+    var handler = CreateHandler();
+    var query = CreateQuery();
+    var cancellationToken = new CancellationToken();
+
+    // Act
+    await handler.Handle(query, cancellationToken);
+
+    // Assert
+    await _repository.Received().CountAsync(cancellationToken);
+  }
+
+  [Fact]
   public async Task Handle_ShouldMapEntitiesToDtos()
   {
     // Arrange
@@ -53,6 +68,7 @@ public class ListCountriesHandlerTests
   public async Task Handle_ShouldReturnExpectedResult()
   {
     // Arrange
+    const int TotalItemCount = 10;
     var handler = CreateHandler();
     var query = CreateQuery();
     var dtos = new List<CountryDto>()
@@ -60,14 +76,16 @@ public class ListCountriesHandlerTests
       new(1, "test_name1"),
       new(2, "test_name2")
     };
+    _repository.CountAsync(Arg.Any<CancellationToken>()).Returns(TotalItemCount);
     _mapper.Map<IEnumerable<CountryDto>>(Arg.Any<List<Country>>()).Returns(dtos);
 
     // Act
-    var result = await handler.Handle(query, default);
+    var (result, totalItemCount) = await handler.Handle(query, default);
 
     // Assert
     result.IsSuccess.Should().BeTrue();
     result.Value.Should().HaveCount(2);
+    totalItemCount.Should().Be(TotalItemCount);
   }
 
   private static ListCountriesQuery CreateQuery()

@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using System.Text.Json;
 using CityPassGuide.UseCases.Countries;
 using CityPassGuide.UseCases.Countries.List;
 using FastEndpoints;
@@ -30,11 +30,19 @@ public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesR
     var pageSize = request.GetAdjustedPageSize();
     var query = new ListCountriesQuery(pageNumber, pageSize);
 
-    Result<IEnumerable<CountryDto>> result = await _mediator.Send(query, cancellationToken);
+    var (result, totalItemCount) = await _mediator.Send(query, cancellationToken);
 
     if (result.IsSuccess)
     {
       Response = result.Value;
+      AddPaginationMetadataHeader(pageNumber, pageSize, totalItemCount);
     }
+  }
+
+  private void AddPaginationMetadataHeader(int pageNumber, int pageSize, int totalItemCount)
+  {
+    var paginationMetadata = new PaginationMetadata(pageNumber, pageSize, totalItemCount);
+    HttpContext.Response.Headers.Append(PaginationMetadata.PaginationMetadataHeader, 
+      JsonSerializer.Serialize(paginationMetadata));
   }
 }

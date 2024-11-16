@@ -7,6 +7,7 @@ using CityPassGuide.UseCases.Countries;
 using System.Net;
 using FastEndpoints;
 using CityPassGuide.UseCases.Countries.List;
+using CityPassGuide.Web;
 
 namespace CityPassGuide.UnitTests.Web.Countries.ListCountries;
 
@@ -23,7 +24,7 @@ public class ListCountriesEndpointTests
     var cancellationToken = new CancellationToken();
     var result = new List<CountryDto>();
     _mediator.Send(Arg.Any<ListCountriesQuery>(), cancellationToken)
-      .Returns(result);
+      .Returns((result, 0));
 
     // Act
     await endpoint.HandleAsync(request, cancellationToken);
@@ -48,7 +49,7 @@ public class ListCountriesEndpointTests
       new(2, "test_name2")
     };
     _mediator.Send(Arg.Any<ListCountriesQuery>(), Arg.Any<CancellationToken>())
-      .Returns(result);
+      .Returns((result, 2));
 
     // Act
     await endpoint.HandleAsync(request, default);
@@ -56,6 +57,33 @@ public class ListCountriesEndpointTests
     // Assert
     endpoint.HttpContext.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
     endpoint.Response.Should().HaveCount(2);
+  }
+
+  [Fact]
+  public async Task HandleAsync_ShouldReturnCorrectPaginationMetadataHeader_WhenSuccessfulResult()
+  {
+    // Arrange
+    var endpoint = CreateEndpoint();
+    var request = new ListCountriesRequest()
+    {
+      PageNumber = 1,
+      PageSize = 2
+    };
+    var result = new List<CountryDto>
+    {
+      new(1, "test_name1"),
+      new(2, "test_name2"),
+      new(3, "test_name3")
+    };
+    _mediator.Send(Arg.Any<ListCountriesQuery>(), Arg.Any<CancellationToken>())
+      .Returns((result, 3));
+
+    // Act
+    await endpoint.HandleAsync(request, default);
+
+    // Assert
+    endpoint.HttpContext.Response.Headers.Should().Contain(PaginationMetadata.PaginationMetadataHeader,
+      "{\"PageNumber\":1,\"PageSize\":2,\"TotalItemCount\":3,\"TotalPageCount\":2}");
   }
 
   private ListCountriesEndpoint CreateEndpoint()
