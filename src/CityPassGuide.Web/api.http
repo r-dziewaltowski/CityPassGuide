@@ -2,6 +2,17 @@
 @host=https://localhost
 @port=57679
 
+// List countries
+GET {{host}}:{{port}}/countries
+
+###
+
+// Get a specific country
+@id_to_get=1
+GET {{host}}:{{port}}/countries/{{id_to_get}}
+
+###
+
 // List all contributors
 GET {{host}}:{{port}}/Contributors
 

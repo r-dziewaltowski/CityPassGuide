@@ -11,14 +11,18 @@
 			"item": [
 				{
 					"name": "ListCountries",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/countries",
+							"raw": "{{host}}:{{port}}/countries",
 							"host": [
 								"{{host}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"countries"
 							]
@@ -32,10 +36,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/countries/{{countryId}}",
+							"raw": "{{host}}:{{port}}/countries/{{countryId}}",
 							"host": [
 								"{{host}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"countries",
 								"{{countryId}}"
@@ -72,12 +77,17 @@
 	"variable": [
 		{
 			"key": "host",
-			"value": "http://localhost:57678",
+			"value": "https://localhost",
 			"type": "default"
 		},
 		{
 			"key": "countryId",
 			"value": "1",
+			"type": "default"
+		},
+		{
+			"key": "port",
+			"value": "57679",
 			"type": "default"
 		}
 	]
