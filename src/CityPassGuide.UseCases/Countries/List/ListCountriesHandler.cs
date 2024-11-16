@@ -12,9 +12,9 @@ public class ListCountriesHandler(IReadRepository<Country> repository, IMapper m
   private readonly IReadRepository<Country> _repository = repository;
   private readonly IMapper _mapper = mapper;
 
-  public async Task<Result<IEnumerable<CountryDto>>> Handle(ListCountriesQuery request, CancellationToken cancellationToken)
+  public async Task<Result<IEnumerable<CountryDto>>> Handle(ListCountriesQuery query, CancellationToken cancellationToken)
   {
-    var spec = new ListCountriesSpec(request.PageNumber, request.PageSize);
+    var spec = new ListCountriesSpec(query.PageNumber, query.PageSize);
     var result = await _repository.ListAsync(spec, cancellationToken);
 
     return Result.Success(_mapper.Map<IEnumerable<CountryDto>>(result));

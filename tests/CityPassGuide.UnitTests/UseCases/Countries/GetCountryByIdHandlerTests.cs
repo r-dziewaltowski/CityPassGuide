@@ -20,14 +20,14 @@ public class GetCountryByIdHandlerTests
   {
     // Arrange
     var handler = new GetCountryByIdHandler(_repository, _mapper);
-    var request = new GetCountryByIdQuery(1);
+    var query = new GetCountryByIdQuery(1);
     var cancellationToken = new CancellationToken();
 
     // Act
-    await handler.Handle(request, cancellationToken);
+    await handler.Handle(query, cancellationToken);
 
     // Assert
-    await _repository.Received().GetByIdAsync(request.CountryId, cancellationToken);
+    await _repository.Received().GetByIdAsync(query.CountryId, cancellationToken);
   }
 
   [Fact]
@@ -35,12 +35,12 @@ public class GetCountryByIdHandlerTests
   {
     // Arrange
     var handler = new GetCountryByIdHandler(_repository, _mapper);
-    var request = new GetCountryByIdQuery(1);
+    var query = new GetCountryByIdQuery(1);
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
       .Returns((Country?)null);
 
     // Act
-    var result = await handler.Handle(request, CancellationToken.None);
+    var result = await handler.Handle(query, CancellationToken.None);
 
     // Assert
     result.Status.Should().Be(ResultStatus.NotFound);
@@ -51,13 +51,13 @@ public class GetCountryByIdHandlerTests
   {
     // Arrange
     var handler = new GetCountryByIdHandler(_repository, _mapper);
-    var request = new GetCountryByIdQuery(1);
+    var query = new GetCountryByIdQuery(1);
     var entity = new Country("test_name");
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
       .Returns(entity);
 
     // Act
-    await handler.Handle(request, CancellationToken.None);
+    await handler.Handle(query, CancellationToken.None);
 
     // Assert
     _mapper.Received().Map<CountryDto>(entity);
@@ -68,7 +68,7 @@ public class GetCountryByIdHandlerTests
   {
     // Arrange
     var handler = new GetCountryByIdHandler(_repository, _mapper);
-    var request = new GetCountryByIdQuery(1);
+    var query = new GetCountryByIdQuery(1);
     var entity = new Country("test_name");
     _repository.GetByIdAsync(Arg.Any<int>(), Arg.Any<CancellationToken>())
       .Returns(entity);
@@ -76,7 +76,7 @@ public class GetCountryByIdHandlerTests
     _mapper.Map<CountryDto>(Arg.Any<Country>()).Returns(dto);
 
     // Act
-    var result = await handler.Handle(request, CancellationToken.None);
+    var result = await handler.Handle(query, CancellationToken.None);
 
     // Assert
     result.IsSuccess.Should().BeTrue();

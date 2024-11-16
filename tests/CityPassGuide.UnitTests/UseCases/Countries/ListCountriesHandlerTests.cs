@@ -20,11 +20,11 @@ public class ListCountriesHandlerTests
   {
     // Arrange
     var handler = CreateHandler();
-    var request = CreateQuery();
+    var query = CreateQuery();
     var cancellationToken = new CancellationToken();
 
     // Act
-    await handler.Handle(request, cancellationToken);
+    await handler.Handle(query, cancellationToken);
 
     // Assert
     await _repository.Received().ListAsync(
@@ -37,13 +37,13 @@ public class ListCountriesHandlerTests
   {
     // Arrange
     var handler = CreateHandler();
-    var request = CreateQuery();
+    var query = CreateQuery();
     var entities = new List<Country>();
     _repository.ListAsync(Arg.Any<ListCountriesSpec>(), Arg.Any<CancellationToken>())
       .Returns(entities);
 
     // Act
-    await handler.Handle(request, default);
+    await handler.Handle(query, default);
 
     // Assert
     _mapper.Received().Map<IEnumerable<CountryDto>>(entities);
@@ -54,7 +54,7 @@ public class ListCountriesHandlerTests
   {
     // Arrange
     var handler = CreateHandler();
-    var request = CreateQuery();
+    var query = CreateQuery();
     var dtos = new List<CountryDto>()
     {
       new(1, "test_name1"),
@@ -63,7 +63,7 @@ public class ListCountriesHandlerTests
     _mapper.Map<IEnumerable<CountryDto>>(Arg.Any<List<Country>>()).Returns(dtos);
 
     // Act
-    var result = await handler.Handle(request, default);
+    var result = await handler.Handle(query, default);
 
     // Assert
     result.IsSuccess.Should().BeTrue();
