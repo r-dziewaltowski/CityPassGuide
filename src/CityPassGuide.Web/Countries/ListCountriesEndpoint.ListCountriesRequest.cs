@@ -30,13 +30,7 @@ public class ListCountriesRequest
     /// </summary>
     public string? Name { get; set; }
 
-    public int GetAdjustedPageNumber()
-    {
-        return PageNumber ?? DefaultPageNumber;
-    }
+    public int AdjustedPageNumber => PageNumber ?? DefaultPageNumber;
 
-    public int GetAdjustedPageSize()
-    {
-        return Math.Min(PageSize ?? DefaultPageSize, MaxPageSize);
-    }
+    public int AdjustedPageSize => Math.Min(PageSize ?? DefaultPageSize, MaxPageSize);
 }

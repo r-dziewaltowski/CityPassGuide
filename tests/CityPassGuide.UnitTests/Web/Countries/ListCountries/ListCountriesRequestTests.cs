@@ -17,7 +17,7 @@ public class ListCountriesRequestTests
         };
 
         // Act
-        var pageNumber = request.GetAdjustedPageNumber();
+        var pageNumber = request.AdjustedPageNumber;
 
         // Assert
         pageNumber.Should().Be(providedPageNumber);
@@ -30,7 +30,7 @@ public class ListCountriesRequestTests
         var request = new ListCountriesRequest();
 
         // Act
-        var pageNumber = request.GetAdjustedPageNumber();
+        var pageNumber = request.AdjustedPageNumber;
 
         // Assert
         pageNumber.Should().Be(ListCountriesRequest.DefaultPageNumber);
@@ -47,7 +47,7 @@ public class ListCountriesRequestTests
         };
 
         // Act
-        var pageNumber = request.GetAdjustedPageSize();
+        var pageNumber = request.AdjustedPageSize;
 
         // Assert
         pageNumber.Should().Be(providedPageSize);
@@ -60,7 +60,7 @@ public class ListCountriesRequestTests
         var request = new ListCountriesRequest();
 
         // Act
-        var pageNumber = request.GetAdjustedPageSize();
+        var pageNumber = request.AdjustedPageSize;
 
         // Assert
         pageNumber.Should().Be(ListCountriesRequest.DefaultPageSize);
@@ -77,7 +77,7 @@ public class ListCountriesRequestTests
         };
 
         // Act
-        var pageNumber = request.GetAdjustedPageSize();
+        var pageNumber = request.AdjustedPageSize;
 
         // Assert
         pageNumber.Should().Be(ListCountriesRequest.MaxPageSize);

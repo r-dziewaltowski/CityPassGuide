@@ -28,8 +28,8 @@ public class ListCountriesEndpoint(IMediator mediator)
     public override async Task<Results<Ok<IEnumerable<CountryDto>>, InternalServerError>> ExecuteAsync(
         ListCountriesRequest request, CancellationToken cancellationToken)
     {
-        var pageNumber = request.GetAdjustedPageNumber();
-        var pageSize = request.GetAdjustedPageSize();
+        var pageNumber = request.AdjustedPageNumber;
+        var pageSize = request.AdjustedPageSize;
         var query = new ListCountriesQuery(pageNumber, pageSize, request.Name);
 
         var (result, totalItemCount) = await _mediator.Send(query, cancellationToken);
