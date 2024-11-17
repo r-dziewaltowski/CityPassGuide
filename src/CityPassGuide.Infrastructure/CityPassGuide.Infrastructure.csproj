@@ -4,6 +4,9 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.SharedKernel" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" />
+    <PackageReference Include="FastEndpoints" />
+    <PackageReference Include="FastEndpoints.Swagger" />
+    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="MailKit" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <PrivateAssets>all</PrivateAssets>

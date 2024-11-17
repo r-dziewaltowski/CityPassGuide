@@ -3,6 +3,7 @@ using CityPassGuide.UseCases.Countries;
 using CityPassGuide.UseCases.Countries.Get;
 using FastEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CityPassGuide.Web.Countries;
 
@@ -12,7 +13,8 @@ namespace CityPassGuide.Web.Countries;
 /// <remarks>
 /// Takes a positive integer ID and returns a matching country DTO.
 /// </remarks>
-public class GetCountryByIdEndpoint(IMediator mediator) : Endpoint<GetCountryByIdRequest, CountryDto>
+public class GetCountryByIdEndpoint(IMediator mediator)
+  : Endpoint<GetCountryByIdRequest, Results<Ok<CountryDto>, NotFound, InternalServerError>>
 {
   private readonly IMediator _mediator = mediator;
 
@@ -25,8 +27,8 @@ public class GetCountryByIdEndpoint(IMediator mediator) : Endpoint<GetCountryByI
       .ProducesProblemFE<InternalErrorResponse>(500));
   }
 
-  public override async Task HandleAsync(GetCountryByIdRequest request,
-    CancellationToken cancellationToken)
+  public override async Task<Results<Ok<CountryDto>, NotFound, InternalServerError>> ExecuteAsync(
+    GetCountryByIdRequest request, CancellationToken cancellationToken)
   {
     var query = new GetCountryByIdQuery(request.CountryId);
 
@@ -34,13 +36,14 @@ public class GetCountryByIdEndpoint(IMediator mediator) : Endpoint<GetCountryByI
 
     if (result.Status == ResultStatus.NotFound)
     {
-      await SendNotFoundAsync(cancellationToken);
-      return;
+      return TypedResults.NotFound();
     }
 
-    if (result.IsSuccess)
+    if (!result.IsSuccess)
     {
-      Response = result.Value;
+      return TypedResults.InternalServerError();
     }
+
+    return TypedResults.Ok(result.Value);
   }
 }

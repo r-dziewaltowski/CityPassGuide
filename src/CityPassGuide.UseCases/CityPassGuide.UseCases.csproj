@@ -3,6 +3,9 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.Result" />
     <PackageReference Include="AutoMapper" />
+    <PackageReference Include="FastEndpoints" />
+    <PackageReference Include="FastEndpoints.Swagger" />
+    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />

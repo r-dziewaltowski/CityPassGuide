@@ -4,10 +4,10 @@ using FluentAssertions;
 using MediatR;
 using CityPassGuide.Web.Countries;
 using CityPassGuide.UseCases.Countries;
-using System.Net;
 using FastEndpoints;
 using CityPassGuide.UseCases.Countries.List;
 using CityPassGuide.Web;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CityPassGuide.UnitTests.Web.Countries.ListCountries;
 
@@ -16,7 +16,7 @@ public class ListCountriesEndpointTests
   private readonly IMediator _mediator = Substitute.For<IMediator>();
 
   [Fact]
-  public async Task HandleAsync_ShouldSendQueryViaMediatorWithCorrectParams()
+  public async Task ExecuteAsync_ShouldSendQueryViaMediatorWithCorrectParams()
   {
     // Arrange
     var endpoint = CreateEndpoint();
@@ -27,7 +27,7 @@ public class ListCountriesEndpointTests
       .Returns((result, 0));
 
     // Act
-    await endpoint.HandleAsync(request, cancellationToken);
+    await endpoint.ExecuteAsync(request, cancellationToken);
 
     // Assert
     await _mediator.Received()
@@ -38,12 +38,12 @@ public class ListCountriesEndpointTests
   }
 
   [Fact]
-  public async Task HandleAsync_ShouldReturnCorrectResponse_WhenSuccessfulResult()
+  public async Task ExecuteAsync_ShouldReturnCorrectResponse_WhenSuccessfulResult()
   {
     // Arrange
     var endpoint = CreateEndpoint();
     var request = new ListCountriesRequest();
-    var result = new List<CountryDto> 
+    var result = new List<CountryDto>
     {
       new(1, "test_name1"),
       new(2, "test_name2")
@@ -52,15 +52,15 @@ public class ListCountriesEndpointTests
       .Returns((result, 2));
 
     // Act
-    await endpoint.HandleAsync(request, default);
+    var response = await endpoint.ExecuteAsync(request, default);
 
     // Assert
-    endpoint.HttpContext.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
-    endpoint.Response.Should().HaveCount(2);
+    response.Result.Should().BeOfType<Ok<IEnumerable<CountryDto>>>();
+    response.Result.As<Ok<IEnumerable<CountryDto>>>().Value.Should().BeSameAs(result);
   }
 
   [Fact]
-  public async Task HandleAsync_ShouldReturnCorrectPaginationMetadataHeader_WhenSuccessfulResult()
+  public async Task ExecuteAsync_ShouldReturnCorrectPaginationMetadataHeader_WhenSuccessfulResult()
   {
     // Arrange
     var endpoint = CreateEndpoint();
@@ -79,7 +79,7 @@ public class ListCountriesEndpointTests
       .Returns((result, 3));
 
     // Act
-    await endpoint.HandleAsync(request, default);
+    await endpoint.ExecuteAsync(request, default);
 
     // Assert
     endpoint.HttpContext.Response.Headers.Should().Contain(PaginationMetadata.PaginationMetadataHeader,

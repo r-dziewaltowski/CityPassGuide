@@ -3,6 +3,7 @@ using CityPassGuide.UseCases.Countries;
 using CityPassGuide.UseCases.Countries.List;
 using FastEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CityPassGuide.Web.Countries;
 
@@ -12,7 +13,8 @@ namespace CityPassGuide.Web.Countries;
 /// <remarks>
 /// Returns a single page of countries.
 /// </remarks>
-public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesRequest, IEnumerable<CountryDto>>
+public class ListCountriesEndpoint(IMediator mediator) 
+  : Endpoint<ListCountriesRequest, Results<Ok<IEnumerable<CountryDto>>, InternalServerError>>
 {
   private readonly IMediator _mediator = mediator;
 
@@ -24,7 +26,8 @@ public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesR
       .ProducesProblemFE<InternalErrorResponse>(500));
   }
 
-  public override async Task HandleAsync(ListCountriesRequest request, CancellationToken cancellationToken)
+  public override async Task<Results<Ok<IEnumerable<CountryDto>>, InternalServerError>> ExecuteAsync(
+    ListCountriesRequest request, CancellationToken cancellationToken)
   {
     var pageNumber = request.GetAdjustedPageNumber();
     var pageSize = request.GetAdjustedPageSize();
@@ -32,11 +35,13 @@ public class ListCountriesEndpoint(IMediator mediator) : Endpoint<ListCountriesR
 
     var (result, totalItemCount) = await _mediator.Send(query, cancellationToken);
 
-    if (result.IsSuccess)
+    if (!result.IsSuccess)
     {
-      Response = result.Value;
-      AddPaginationMetadataHeader(pageNumber, pageSize, totalItemCount);
+      return TypedResults.InternalServerError();
     }
+
+    AddPaginationMetadataHeader(pageNumber, pageSize, totalItemCount);
+    return TypedResults.Ok(result.Value);
   }
 
   private void AddPaginationMetadataHeader(int pageNumber, int pageSize, int totalItemCount)

@@ -6,8 +6,8 @@ using MediatR;
 using CityPassGuide.Web.Countries;
 using CityPassGuide.UseCases.Countries.Get;
 using CityPassGuide.UseCases.Countries;
-using System.Net;
 using FastEndpoints;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CityPassGuide.UnitTests.Web.Countries.GetCountryById;
 
@@ -16,7 +16,7 @@ public class GetCountryByIdEndpointTests
   private readonly IMediator _mediator = Substitute.For<IMediator>();
 
   [Fact]
-  public async Task HandleAsync_ShouldSendQueryViaMediatorWithCorrectParams()
+  public async Task ExecuteAsync_ShouldSendQueryViaMediatorWithCorrectParams()
   {
     // Arrange
     var endpoint = CreateEndpoint();
@@ -30,7 +30,7 @@ public class GetCountryByIdEndpointTests
       .Returns(result);
 
     // Act
-    await endpoint.HandleAsync(request, cancellationToken);
+    await endpoint.ExecuteAsync(request, cancellationToken);
 
     // Assert
     await _mediator.Received()
@@ -38,7 +38,7 @@ public class GetCountryByIdEndpointTests
   }
 
   [Fact]
-  public async Task HandleAsync_ShouldReturnNotFound_WhenNoCountryFound()
+  public async Task ExecuteAsync_ShouldReturnNotFound_WhenNoCountryFound()
   {
     // Arrange
     var endpoint = CreateEndpoint();
@@ -47,14 +47,14 @@ public class GetCountryByIdEndpointTests
       .Returns(Result<CountryDto>.NotFound());
 
     // Act
-    await endpoint.HandleAsync(request, default);
+    var response = await endpoint.ExecuteAsync(request, default);
 
     // Assert
-    endpoint.HttpContext.Response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+    response.Result.Should().BeOfType<NotFound>();
   }
 
   [Fact]
-  public async Task HandleAsync_ShouldReturnCorrectResponse_WhenSuccessfulResult()
+  public async Task ExecuteAsync_ShouldReturnCorrectResponse_WhenSuccessfulResult()
   {
     // Arrange
     var endpoint = CreateEndpoint();
@@ -64,11 +64,11 @@ public class GetCountryByIdEndpointTests
       .Returns(result);
 
     // Act
-    await endpoint.HandleAsync(request, default);
+    var response = await endpoint.ExecuteAsync(request, default);
 
     // Assert
-    endpoint.HttpContext.Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
-    endpoint.Response.Should().Be(result);
+    response.Result.Should().BeOfType<Ok<CountryDto>>();
+    response.Result.As<Ok<CountryDto>>().Value.Should().Be(result);
   }
 
   private GetCountryByIdEndpoint CreateEndpoint()
