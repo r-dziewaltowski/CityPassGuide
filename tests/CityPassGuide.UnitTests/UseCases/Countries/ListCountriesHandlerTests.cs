@@ -91,7 +91,7 @@ public class ListCountriesHandlerTests
 
     private static ListCountriesQuery CreateQuery()
     {
-        return new ListCountriesQuery(1, 5);
+        return new ListCountriesQuery(PageNumber: 1, PageSize: 5, Name: null);
     }
 
     private ListCountriesHandler CreateHandler()

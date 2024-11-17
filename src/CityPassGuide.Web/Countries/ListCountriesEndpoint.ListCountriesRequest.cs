@@ -7,10 +7,11 @@ public class ListCountriesRequest
     public const string Route = "/countries";
     public const string PageNumberParamName = nameof(PageNumber);
     public const string PageSizeParamName = nameof(PageSize);
+    public const string NameParamName = nameof(Name);
 
     public const int DefaultPageNumber = 1;
     public const int DefaultPageSize = 10;
-    public const int MaxPageSize = 20;
+    public const int MaxPageSize = 100;
 
     /// <summary>
     /// Positive page number to be returned (default applied if not specified)
@@ -23,6 +24,11 @@ public class ListCountriesRequest
     /// </summary>
     [DefaultValue(DefaultPageSize)]
     public int? PageSize { get; set; }
+
+    /// <summary>
+    /// Name to filter countries by
+    /// </summary>
+    public string? Name { get; set; }
 
     public int GetAdjustedPageNumber()
     {

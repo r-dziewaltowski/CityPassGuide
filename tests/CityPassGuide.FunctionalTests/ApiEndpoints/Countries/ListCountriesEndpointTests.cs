@@ -40,6 +40,23 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
     }
 
     [Fact]
+    public async Task Endpoint_ShouldReturnFilteredCountry()
+    {
+        // Arrange
+        var request = CreateRequest()
+            .AddParameter(ListCountriesRequest.PageNumberParamName, 1)
+            .AddParameter(ListCountriesRequest.PageSizeParamName, 2)
+            .AddParameter(ListCountriesRequest.NameParamName, "Poland");
+
+        // Act
+        var response = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
+
+        // Assert
+        response.Should().HaveCount(1);
+        response.First().Id.Should().Be(3);
+    }
+
+    [Fact]
     public async Task Endpoint_ShouldReturnPaginationMetadataHeader()
     {
         // Act

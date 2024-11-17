@@ -14,7 +14,7 @@ public class ListCountriesHandler(IReadRepository<Country> repository, IMapper m
 
     public async Task<(Result<IEnumerable<CountryDto>>, int)> Handle(ListCountriesQuery query, CancellationToken cancellationToken)
     {
-        var spec = new ListCountriesSpec(query.PageNumber, query.PageSize);
+        var spec = new ListCountriesSpec(query.PageNumber, query.PageSize, query.Name);
         var result = await _repository.ListAsync(spec, cancellationToken);
         var totalItemCount = await _repository.CountAsync(cancellationToken);
 

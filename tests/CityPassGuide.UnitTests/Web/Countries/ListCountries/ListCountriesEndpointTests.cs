@@ -20,7 +20,12 @@ public class ListCountriesEndpointTests
     {
         // Arrange
         var endpoint = CreateEndpoint();
-        var request = new ListCountriesRequest();
+        var request = new ListCountriesRequest()
+        {
+            PageNumber = 1,
+            PageSize = 1,
+            Name = "TestName",
+        };
         var cancellationToken = new CancellationToken();
         var result = new List<CountryDto>();
         _mediator.Send(Arg.Any<ListCountriesQuery>(), cancellationToken)
@@ -32,8 +37,9 @@ public class ListCountriesEndpointTests
         // Assert
         await _mediator.Received()
             .Send(Arg.Is<ListCountriesQuery>(query =>
-                    query.PageNumber == request.GetAdjustedPageNumber() &&
-                    query.PageSize == request.GetAdjustedPageSize()),
+                    query.PageNumber == request.PageNumber &&
+                    query.PageSize == request.PageSize &&
+                    query.Name == request.Name),
                 cancellationToken);
     }
 
