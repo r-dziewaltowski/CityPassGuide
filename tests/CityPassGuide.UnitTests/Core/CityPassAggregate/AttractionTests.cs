@@ -1,6 +1,6 @@
-﻿using Xunit;
-using CityPassGuide.Core.CityPassAggregate;
+﻿using CityPassGuide.Core.CityPassAggregate;
 using FluentAssertions;
+using Xunit;
 
 namespace CityPassGuide.UnitTests.Core.CityPassAggregate;
 public class AttractionTests

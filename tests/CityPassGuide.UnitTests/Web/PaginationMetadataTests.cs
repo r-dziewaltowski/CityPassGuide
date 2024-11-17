@@ -1,6 +1,6 @@
-﻿using Xunit;
+﻿using CityPassGuide.Web;
 using FluentAssertions;
-using CityPassGuide.Web;
+using Xunit;
 
 namespace CityPassGuide.UnitTests.Web;
 

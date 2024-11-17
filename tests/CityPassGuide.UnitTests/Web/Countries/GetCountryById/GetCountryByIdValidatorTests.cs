@@ -1,6 +1,6 @@
-﻿using Xunit;
+﻿using CityPassGuide.Web.Countries;
 using FluentAssertions;
-using CityPassGuide.Web.Countries;
+using Xunit;
 
 namespace CityPassGuide.UnitTests.Web.Countries.GetCountryById;
 

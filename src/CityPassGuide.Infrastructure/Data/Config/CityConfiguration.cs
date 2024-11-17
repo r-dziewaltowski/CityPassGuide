@@ -13,10 +13,10 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
       .IsRequired();
 
     builder.HasIndex(p => new
-      {
-        p.CountryId,
-        p.Name
-      })
+    {
+      p.CountryId,
+      p.Name
+    })
       .IsUnique();
   }
 }

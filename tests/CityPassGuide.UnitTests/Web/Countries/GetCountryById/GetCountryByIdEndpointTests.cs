@@ -1,13 +1,13 @@
-﻿using Xunit;
-using Ardalis.Result;
-using NSubstitute;
+﻿using Ardalis.Result;
+using CityPassGuide.UseCases.Countries;
+using CityPassGuide.UseCases.Countries.Get;
+using CityPassGuide.Web.Countries;
+using FastEndpoints;
 using FluentAssertions;
 using MediatR;
-using CityPassGuide.Web.Countries;
-using CityPassGuide.UseCases.Countries.Get;
-using CityPassGuide.UseCases.Countries;
-using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
+using NSubstitute;
+using Xunit;
 
 namespace CityPassGuide.UnitTests.Web.Countries.GetCountryById;
 

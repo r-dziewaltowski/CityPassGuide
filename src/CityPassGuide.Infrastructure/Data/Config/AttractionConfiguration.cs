@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CityPassGuide.Core.CityPassAggregate;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Infrastructure.Data.Config;
 
@@ -13,10 +13,10 @@ public class AttractionConfiguration : IEntityTypeConfiguration<Attraction>
       .IsRequired();
 
     builder.HasIndex(p => new
-      {
-        p.CityId,
-        p.Name
-      })
+    {
+      p.CityId,
+      p.Name
+    })
       .IsUnique();
   }
 }

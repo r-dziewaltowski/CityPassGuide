@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Ardalis.SharedKernel;
+using CityPassGuide.Core.CityPassAggregate;
 using CityPassGuide.Core.ContributorAggregate;
 using Microsoft.EntityFrameworkCore;
-using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.Infrastructure.Data;
 public class AppDbContext(DbContextOptions<AppDbContext> options,

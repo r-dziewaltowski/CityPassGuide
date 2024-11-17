@@ -13,7 +13,7 @@ namespace CityPassGuide.Web.Countries;
 /// <remarks>
 /// Returns a single page of countries.
 /// </remarks>
-public class ListCountriesEndpoint(IMediator mediator) 
+public class ListCountriesEndpoint(IMediator mediator)
   : Endpoint<ListCountriesRequest, Results<Ok<IEnumerable<CountryDto>>, InternalServerError>>
 {
   private readonly IMediator _mediator = mediator;
@@ -47,7 +47,7 @@ public class ListCountriesEndpoint(IMediator mediator)
   private void AddPaginationMetadataHeader(int pageNumber, int pageSize, int totalItemCount)
   {
     var paginationMetadata = new PaginationMetadata(pageNumber, pageSize, totalItemCount);
-    HttpContext.Response.Headers.Append(PaginationMetadata.PaginationMetadataHeader, 
+    HttpContext.Response.Headers.Append(PaginationMetadata.PaginationMetadataHeader,
       JsonSerializer.Serialize(paginationMetadata));
   }
 }

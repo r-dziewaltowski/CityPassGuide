@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CityPassGuide.UseCases.Countries;
 using CityPassGuide.Core.CityPassAggregate;
+using CityPassGuide.UseCases.Countries;
 
 namespace CityPassGuide.UseCases.Profiles;
 

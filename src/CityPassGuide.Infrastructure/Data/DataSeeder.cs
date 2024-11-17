@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CityPassGuide.Core.CityPassAggregate;
+﻿using CityPassGuide.Core.CityPassAggregate;
+using Microsoft.EntityFrameworkCore;
 
 namespace CityPassGuide.Infrastructure.Data;
 

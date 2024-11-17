@@ -1,13 +1,13 @@
-﻿using Xunit;
-using NSubstitute;
-using FluentAssertions;
-using MediatR;
-using CityPassGuide.Web.Countries;
-using CityPassGuide.UseCases.Countries;
-using FastEndpoints;
+﻿using CityPassGuide.UseCases.Countries;
 using CityPassGuide.UseCases.Countries.List;
 using CityPassGuide.Web;
+using CityPassGuide.Web.Countries;
+using FastEndpoints;
+using FluentAssertions;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
+using NSubstitute;
+using Xunit;
 
 namespace CityPassGuide.UnitTests.Web.Countries.ListCountries;
 
@@ -31,7 +31,7 @@ public class ListCountriesEndpointTests
 
     // Assert
     await _mediator.Received()
-      .Send(Arg.Is<ListCountriesQuery>(query => 
+      .Send(Arg.Is<ListCountriesQuery>(query =>
           query.PageNumber == request.GetAdjustedPageNumber() &&
           query.PageSize == request.GetAdjustedPageSize()),
         cancellationToken);

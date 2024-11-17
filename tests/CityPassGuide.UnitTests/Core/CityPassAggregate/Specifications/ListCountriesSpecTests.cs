@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
-using Xunit;
+﻿using CityPassGuide.Core.CityPassAggregate;
 using CityPassGuide.Core.CityPassAggregate.Specifications;
-using CityPassGuide.Core.CityPassAggregate;
+using FluentAssertions;
+using Xunit;
 
 namespace CityPassGuide.UnitTests.Core.CityPassAggregate.Specifications;
 
@@ -37,6 +37,6 @@ public class ListCountriesSpecTests
     var result = listCountriesSpec.Evaluate(_entities);
 
     // Assert
-    result.Should().BeEquivalentTo(_entities.GetRange(0 ,2));
+    result.Should().BeEquivalentTo(_entities.GetRange(0, 2));
   }
 }

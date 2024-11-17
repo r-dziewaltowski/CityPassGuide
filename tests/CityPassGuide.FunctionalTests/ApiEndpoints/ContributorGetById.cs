@@ -1,5 +1,4 @@
 ﻿using Ardalis.HttpClientTestExtensions;
-using CityPassGuide.Infrastructure.Data;
 using CityPassGuide.Web.Contributors;
 using Xunit;
 
