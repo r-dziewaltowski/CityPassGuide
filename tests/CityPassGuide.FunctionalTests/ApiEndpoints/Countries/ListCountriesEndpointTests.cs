@@ -17,10 +17,10 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
     var request = CreateRequest();
 
     // Act
-    var result = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
+    var response = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
 
     // Assert
-    result.Should().HaveCount(3);
+    response.Should().HaveCount(3);
   }
 
   [Fact]
@@ -32,21 +32,21 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
       .AddParameter(ListCountriesRequest.PageSizeParamName, 1);
 
     // Act
-    var result = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
+    var response = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
 
     // Assert
-    result.Should().HaveCount(1);
-    result.First().Id.Should().Be(2);
+    response.Should().HaveCount(1);
+    response.First().Id.Should().Be(2);
   }
 
   [Fact]
   public async Task Endpoint_ShouldReturnPaginationMetadataHeader()
   {
     // Act
-    var result = await Client.GetAsync(ListCountriesRequest.Route);
+    var response = await Client.GetAsync(ListCountriesRequest.Route);
 
     // Assert
-    result.Headers.Should().ContainKey(PaginationMetadata.PaginationMetadataHeader);
+    response.Headers.Should().ContainKey(PaginationMetadata.PaginationMetadataHeader);
   }
 
   private static RestRequest CreateRequest()

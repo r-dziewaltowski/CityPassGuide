@@ -16,11 +16,11 @@ public class GetCountryByIdEndpointTests(CustomWebApplicationFactory<Program> fa
     var request = CreateRequest(1);
 
     // Act
-    var result = await Client.GetAndDeserializeAsync<CountryDto>(request);
+    var response = await Client.GetAndDeserializeAsync<CountryDto>(request);
 
     // Assert
-    result.Id.Should().Be(1);
-    result.Name.Should().Be("United Kingdom");
+    response.Id.Should().Be(1);
+    response.Name.Should().Be("United Kingdom");
   }
 
   [Fact]
