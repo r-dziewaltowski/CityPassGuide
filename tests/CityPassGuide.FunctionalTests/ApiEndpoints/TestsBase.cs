@@ -6,20 +6,20 @@ namespace CityPassGuide.FunctionalTests.ApiEndpoints;
 
 public class TestsBase
 {
-  protected readonly HttpClient Client;
+    protected readonly HttpClient Client;
 
-  public TestsBase(CustomWebApplicationFactory<Program> factory)
-  {
-    Client = factory.CreateClient();
-    CreateAndSeedDatabase(factory);
-  }
+    public TestsBase(CustomWebApplicationFactory<Program> factory)
+    {
+        Client = factory.CreateClient();
+        CreateAndSeedDatabase(factory);
+    }
 
-  private static void CreateAndSeedDatabase(WebApplicationFactory<Program> factory)
-  {
-    using var scope = factory.Services.CreateScope();
-    var scopedServices = scope.ServiceProvider;
-    var db = scopedServices.GetRequiredService<AppDbContext>();
-    db.Database.EnsureDeleted();
-    db.Database.EnsureCreated();
-  }
+    private static void CreateAndSeedDatabase(WebApplicationFactory<Program> factory)
+    {
+        using var scope = factory.Services.CreateScope();
+        var scopedServices = scope.ServiceProvider;
+        var db = scopedServices.GetRequiredService<AppDbContext>();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+    }
 }

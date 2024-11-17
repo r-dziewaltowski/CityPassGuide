@@ -14,36 +14,36 @@ namespace CityPassGuide.Web.Countries;
 /// Takes a positive integer ID and returns a matching country DTO.
 /// </remarks>
 public class GetCountryByIdEndpoint(IMediator mediator)
-  : Endpoint<GetCountryByIdRequest, Results<Ok<CountryDto>, NotFound, InternalServerError>>
+    : Endpoint<GetCountryByIdRequest, Results<Ok<CountryDto>, NotFound, InternalServerError>>
 {
-  private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator = mediator;
 
-  public override void Configure()
-  {
-    Get(GetCountryByIdRequest.Route);
-    AllowAnonymous();
-    Description(b => b
-      .Produces(404)
-      .ProducesProblemFE<InternalErrorResponse>(500));
-  }
-
-  public override async Task<Results<Ok<CountryDto>, NotFound, InternalServerError>> ExecuteAsync(
-    GetCountryByIdRequest request, CancellationToken cancellationToken)
-  {
-    var query = new GetCountryByIdQuery(request.CountryId);
-
-    var result = await _mediator.Send(query, cancellationToken);
-
-    if (result.Status == ResultStatus.NotFound)
+    public override void Configure()
     {
-      return TypedResults.NotFound();
+        Get(GetCountryByIdRequest.Route);
+        AllowAnonymous();
+        Description(b => b
+            .Produces(404)
+            .ProducesProblemFE<InternalErrorResponse>(500));
     }
 
-    if (!result.IsSuccess)
+    public override async Task<Results<Ok<CountryDto>, NotFound, InternalServerError>> ExecuteAsync(
+        GetCountryByIdRequest request, CancellationToken cancellationToken)
     {
-      return TypedResults.InternalServerError();
-    }
+        var query = new GetCountryByIdQuery(request.CountryId);
 
-    return TypedResults.Ok(result.Value);
-  }
+        var result = await _mediator.Send(query, cancellationToken);
+
+        if (result.Status == ResultStatus.NotFound)
+        {
+            return TypedResults.NotFound();
+        }
+
+        if (!result.IsSuccess)
+        {
+            return TypedResults.InternalServerError();
+        }
+
+        return TypedResults.Ok(result.Value);
+    }
 }

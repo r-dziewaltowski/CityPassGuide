@@ -14,28 +14,28 @@ using Microsoft.Extensions.Logging;
 namespace CityPassGuide.Infrastructure;
 public static class InfrastructureServiceExtensions
 {
-  public static IServiceCollection AddInfrastructureServices(
-    this IServiceCollection services,
-    ConfigurationManager config,
-    ILogger logger,
-    bool isDevelopment)
-  {
-    string? connectionString = config.GetConnectionString("SqliteConnection");
-    Guard.Against.Null(connectionString);
-    services.AddDbContext<AppDbContext>(options =>
-     options.UseSqlite(connectionString)
-      .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-      .EnableSensitiveDataLogging(isDevelopment));
+    public static IServiceCollection AddInfrastructureServices(
+        this IServiceCollection services,
+        ConfigurationManager config,
+        ILogger logger,
+        bool isDevelopment)
+    {
+        string? connectionString = config.GetConnectionString("SqliteConnection");
+        Guard.Against.Null(connectionString);
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlite(connectionString)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .EnableSensitiveDataLogging(isDevelopment));
 
-    services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-    services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
-    services.AddScoped<IListContributorsQueryService, ListContributorsQueryService>();
-    services.AddScoped<IDeleteContributorService, DeleteContributorService>();
+        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+        services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+        services.AddScoped<IListContributorsQueryService, ListContributorsQueryService>();
+        services.AddScoped<IDeleteContributorService, DeleteContributorService>();
 
-    services.Configure<MailserverConfiguration>(config.GetSection("Mailserver"));
+        services.Configure<MailserverConfiguration>(config.GetSection("Mailserver"));
 
-    logger.LogInformation("{Project} services registered", "Infrastructure");
+        logger.LogInformation("{Project} services registered", "Infrastructure");
 
-    return services;
-  }
+        return services;
+    }
 }

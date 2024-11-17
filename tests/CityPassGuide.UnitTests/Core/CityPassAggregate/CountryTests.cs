@@ -5,25 +5,25 @@ using Xunit;
 namespace CityPassGuide.UnitTests.Core.CityPassAggregate;
 public class CountryTests
 {
-  private const string Name = "UK";
+    private const string Name = "UK";
 
-  [Fact]
-  public void Constructor_ShouldSetProperties()
-  {
-    // Act
-    var country = new Country(Name);
+    [Fact]
+    public void Constructor_ShouldSetProperties()
+    {
+        // Act
+        var country = new Country(Name);
 
-    // Assert
-    country.Name.Should().Be(Name);
-  }
+        // Assert
+        country.Name.Should().Be(Name);
+    }
 
-  [Fact]
-  public void Constructor_ShouldThrow_WhenNameEmpty()
-  {
-    // Act
-    var act = () => new Country("");
+    [Fact]
+    public void Constructor_ShouldThrow_WhenNameEmpty()
+    {
+        // Act
+        var act = () => new Country("");
 
-    // Assert
-    act.Should().Throw<ArgumentException>();
-  }
+        // Assert
+        act.Should().Throw<ArgumentException>();
+    }
 }

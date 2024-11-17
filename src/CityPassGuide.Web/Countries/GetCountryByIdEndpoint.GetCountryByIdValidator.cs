@@ -8,9 +8,8 @@ namespace CityPassGuide.Web.Countries;
 /// </summary>
 public class GetCountryByIdValidator : Validator<GetCountryByIdRequest>
 {
-  public GetCountryByIdValidator()
-  {
-    RuleFor(x => x.CountryId)
-      .GreaterThan(0);
-  }
+    public GetCountryByIdValidator()
+    {
+        RuleFor(x => x.CountryId).GreaterThan(0);
+    }
 }

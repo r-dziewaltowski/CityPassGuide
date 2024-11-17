@@ -6,13 +6,13 @@ namespace CityPassGuide.Infrastructure.Data.Config;
 
 public class CountryConfiguration : IEntityTypeConfiguration<Country>
 {
-  public void Configure(EntityTypeBuilder<Country> builder)
-  {
-    builder.Property(p => p.Name)
-      .HasMaxLength(DataSchemaConstants.DefaultNameLength)
-      .IsRequired();
+    public void Configure(EntityTypeBuilder<Country> builder)
+    {
+        builder.Property(p => p.Name)
+            .HasMaxLength(DataSchemaConstants.DefaultNameLength)
+            .IsRequired();
 
-    builder.HasIndex(p => p.Name)
-      .IsUnique();
-  }
+        builder.HasIndex(p => p.Name)
+            .IsUnique();
+    }
 }

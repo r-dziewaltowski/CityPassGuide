@@ -11,44 +11,42 @@ namespace CityPassGuide.FunctionalTests;
 
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
-  protected override void ConfigureWebHost(IWebHostBuilder builder)
-  {
-    builder.ConfigureServices(services =>
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-      var dbContextDescriptor = services.SingleOrDefault(
-          d => d.ServiceType ==
-              typeof(DbContextOptions<AppDbContext>));
+        builder.ConfigureServices(services =>
+        {
+            var dbContextDescriptor = services.SingleOrDefault(
+            d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
 
-      if (dbContextDescriptor != null)
-      {
-        services.Remove(dbContextDescriptor);
-      }
+            if (dbContextDescriptor != null)
+            {
+                services.Remove(dbContextDescriptor);
+            }
 
-      var dbConnectionDescriptor = services.SingleOrDefault(
-          d => d.ServiceType ==
-              typeof(DbConnection));
+            var dbConnectionDescriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(DbConnection));
 
-      if (dbConnectionDescriptor != null)
-      {
-        services.Remove(dbConnectionDescriptor);
-      }
+            if (dbConnectionDescriptor != null)
+            {
+                services.Remove(dbConnectionDescriptor);
+            }
 
-      // Create open SqliteConnection so EF won't automatically close it.
-      services.AddSingleton<DbConnection>(container =>
-      {
-        var connection = new SqliteConnection("DataSource=:memory:");
-        connection.Open();
+            // Create open SqliteConnection so EF won't automatically close it.
+            services.AddSingleton<DbConnection>(container =>
+            {
+                var connection = new SqliteConnection("DataSource=:memory:");
+                connection.Open();
 
-        return connection;
-      });
+                return connection;
+            });
 
-      services.AddDbContext<AppDbContext>((container, options) =>
-      {
-        var connection = container.GetRequiredService<DbConnection>();
-        options.UseSqlite(connection);
-      });
-    });
+            services.AddDbContext<AppDbContext>((container, options) =>
+            {
+                var connection = container.GetRequiredService<DbConnection>();
+                options.UseSqlite(connection);
+            });
+        });
 
-    builder.UseEnvironment("Development");
-  }
+        builder.UseEnvironment("Development");
+    }
 }

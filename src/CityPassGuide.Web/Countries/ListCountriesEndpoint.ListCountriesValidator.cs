@@ -8,11 +8,9 @@ namespace CityPassGuide.Web.Countries;
 /// </summary>
 public class ListCountriesValidator : Validator<ListCountriesRequest>
 {
-  public ListCountriesValidator()
-  {
-    RuleFor(x => x.PageNumber)
-      .GreaterThan(0);
-    RuleFor(x => x.PageSize)
-      .GreaterThan(0);
-  }
+    public ListCountriesValidator()
+    {
+        RuleFor(x => x.PageNumber).GreaterThan(0);
+        RuleFor(x => x.PageSize).GreaterThan(0);
+    }
 }

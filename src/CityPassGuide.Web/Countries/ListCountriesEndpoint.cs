@@ -14,40 +14,39 @@ namespace CityPassGuide.Web.Countries;
 /// Returns a single page of countries.
 /// </remarks>
 public class ListCountriesEndpoint(IMediator mediator)
-  : Endpoint<ListCountriesRequest, Results<Ok<IEnumerable<CountryDto>>, InternalServerError>>
+    : Endpoint<ListCountriesRequest, Results<Ok<IEnumerable<CountryDto>>, InternalServerError>>
 {
-  private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator = mediator;
 
-  public override void Configure()
-  {
-    Get(ListCountriesRequest.Route);
-    AllowAnonymous();
-    Description(b => b
-      .ProducesProblemFE<InternalErrorResponse>(500));
-  }
-
-  public override async Task<Results<Ok<IEnumerable<CountryDto>>, InternalServerError>> ExecuteAsync(
-    ListCountriesRequest request, CancellationToken cancellationToken)
-  {
-    var pageNumber = request.GetAdjustedPageNumber();
-    var pageSize = request.GetAdjustedPageSize();
-    var query = new ListCountriesQuery(pageNumber, pageSize);
-
-    var (result, totalItemCount) = await _mediator.Send(query, cancellationToken);
-
-    if (!result.IsSuccess)
+    public override void Configure()
     {
-      return TypedResults.InternalServerError();
+        Get(ListCountriesRequest.Route);
+        AllowAnonymous();
+        Description(b => b.ProducesProblemFE<InternalErrorResponse>(500));
     }
 
-    AddPaginationMetadataHeader(pageNumber, pageSize, totalItemCount);
-    return TypedResults.Ok(result.Value);
-  }
+    public override async Task<Results<Ok<IEnumerable<CountryDto>>, InternalServerError>> ExecuteAsync(
+        ListCountriesRequest request, CancellationToken cancellationToken)
+    {
+        var pageNumber = request.GetAdjustedPageNumber();
+        var pageSize = request.GetAdjustedPageSize();
+        var query = new ListCountriesQuery(pageNumber, pageSize);
 
-  private void AddPaginationMetadataHeader(int pageNumber, int pageSize, int totalItemCount)
-  {
-    var paginationMetadata = new PaginationMetadata(pageNumber, pageSize, totalItemCount);
-    HttpContext.Response.Headers.Append(PaginationMetadata.PaginationMetadataHeader,
-      JsonSerializer.Serialize(paginationMetadata));
-  }
+        var (result, totalItemCount) = await _mediator.Send(query, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return TypedResults.InternalServerError();
+        }
+
+        AddPaginationMetadataHeader(pageNumber, pageSize, totalItemCount);
+        return TypedResults.Ok(result.Value);
+    }
+
+    private void AddPaginationMetadataHeader(int pageNumber, int pageSize, int totalItemCount)
+    {
+        var paginationMetadata = new PaginationMetadata(pageNumber, pageSize, totalItemCount);
+        HttpContext.Response.Headers.Append(PaginationMetadata.PaginationMetadataHeader,
+            JsonSerializer.Serialize(paginationMetadata));
+    }
 }

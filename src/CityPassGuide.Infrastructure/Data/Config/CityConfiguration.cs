@@ -6,17 +6,16 @@ namespace CityPassGuide.Infrastructure.Data.Config;
 
 public class CityConfiguration : IEntityTypeConfiguration<City>
 {
-  public void Configure(EntityTypeBuilder<City> builder)
-  {
-    builder.Property(p => p.Name)
-      .HasMaxLength(DataSchemaConstants.DefaultNameLength)
-      .IsRequired();
-
-    builder.HasIndex(p => new
+    public void Configure(EntityTypeBuilder<City> builder)
     {
-      p.CountryId,
-      p.Name
-    })
-      .IsUnique();
-  }
+        builder.Property(p => p.Name)
+            .HasMaxLength(DataSchemaConstants.DefaultNameLength)
+            .IsRequired();
+
+        builder.HasIndex(p => new
+        {
+            p.CountryId,
+            p.Name
+        }).IsUnique();
+    }
 }
