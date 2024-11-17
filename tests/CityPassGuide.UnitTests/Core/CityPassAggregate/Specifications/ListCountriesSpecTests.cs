@@ -1,20 +1,42 @@
 ﻿using FluentAssertions;
 using Xunit;
 using CityPassGuide.Core.CityPassAggregate.Specifications;
+using CityPassGuide.Core.CityPassAggregate;
 
 namespace CityPassGuide.UnitTests.Core.CityPassAggregate.Specifications;
 
 public class ListCountriesSpecTests
 {
+  private static readonly List<Country> _entities =
+  [
+    new("TestCountry1"),
+    new("TestCountry2"),
+    new("TestCountry3")
+  ];
+
   [Fact]
-  public void Constructor_ShouldSetSkipAndTakeCorrectly()
+  public void Evaluate_ShouldSkipCorrectly()
   {
+    // Arrange
+    var listCountriesSpec = new ListCountriesSpec(2, 1);
+
     // Act
-    var listCountriesSpec = new ListCountriesSpec(3, 5);
+    var result = listCountriesSpec.Evaluate(_entities);
 
     // Assert
-    var querySpec = listCountriesSpec.Query.Specification;
-    querySpec.Skip.Should().Be(10);
-    querySpec.Take.Should().Be(5);
+    result.Should().BeEquivalentTo(_entities.GetRange(1, 1));
+  }
+
+  [Fact]
+  public void Evaluate_ShouldTakeCorrectly()
+  {
+    // Arrange
+    var listCountriesSpec = new ListCountriesSpec(1, 2);
+
+    // Act
+    var result = listCountriesSpec.Evaluate(_entities);
+
+    // Assert
+    result.Should().BeEquivalentTo(_entities.GetRange(0 ,2));
   }
 }
