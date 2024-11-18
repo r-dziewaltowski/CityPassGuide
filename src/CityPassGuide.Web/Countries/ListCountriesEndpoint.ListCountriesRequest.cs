@@ -8,27 +8,33 @@ public class ListCountriesRequest
     public const string PageNumberParamName = nameof(PageNumber);
     public const string PageSizeParamName = nameof(PageSize);
     public const string NameParamName = nameof(Name);
+    public const string SearchQueryParamName = nameof(SearchQuery);
 
     public const int DefaultPageNumber = 1;
     public const int DefaultPageSize = 10;
     public const int MaxPageSize = 100;
 
     /// <summary>
-    /// Positive page number to be returned (default applied if not specified)
+    /// Positive page number of countries to be returned (default applied if not specified)
     /// </summary>
     [DefaultValue(DefaultPageNumber)]
     public int? PageNumber { get; set; }
 
     /// <summary>
-    /// Positive page size to be returned (default applied if not specified)
+    /// Positive page size of countries to be returned (default applied if not specified)
     /// </summary>
     [DefaultValue(DefaultPageSize)]
     public int? PageSize { get; set; }
 
     /// <summary>
-    /// Name to filter countries by
+    /// Value to filter countries by name
     /// </summary>
     public string? Name { get; set; }
+
+    /// <summary>
+    /// Value to search countries
+    /// </summary>
+    public string? SearchQuery { get; set; }
 
     public int AdjustedPageNumber => PageNumber ?? DefaultPageNumber;
 

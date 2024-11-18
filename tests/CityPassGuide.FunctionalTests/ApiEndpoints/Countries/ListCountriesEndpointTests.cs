@@ -40,12 +40,20 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
     }
 
     [Fact]
+    public async Task Endpoint_ShouldReturnPaginationMetadataHeader()
+    {
+        // Act
+        var response = await Client.GetAsync(ListCountriesRequest.Route);
+
+        // Assert
+        response.Headers.Should().ContainKey(PaginationMetadata.PaginationMetadataHeader);
+    }
+
+    [Fact]
     public async Task Endpoint_ShouldReturnFilteredCountry()
     {
         // Arrange
         var request = CreateRequest()
-            .AddParameter(ListCountriesRequest.PageNumberParamName, 1)
-            .AddParameter(ListCountriesRequest.PageSizeParamName, 2)
             .AddParameter(ListCountriesRequest.NameParamName, "Poland");
 
         // Act
@@ -57,13 +65,18 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
     }
 
     [Fact]
-    public async Task Endpoint_ShouldReturnPaginationMetadataHeader()
+    public async Task Endpoint_ShouldReturnSearchedCountry()
     {
+        // Arrange
+        var request = CreateRequest()
+            .AddParameter(ListCountriesRequest.SearchQueryParamName, "United");
+
         // Act
-        var response = await Client.GetAsync(ListCountriesRequest.Route);
+        var response = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
 
         // Assert
-        response.Headers.Should().ContainKey(PaginationMetadata.PaginationMetadataHeader);
+        response.Should().HaveCount(1);
+        response.First().Id.Should().Be(1);
     }
 
     private static RestRequest CreateRequest()

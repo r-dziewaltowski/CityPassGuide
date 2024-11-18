@@ -30,7 +30,7 @@ public class ListCountriesEndpoint(IMediator mediator)
     {
         var pageNumber = request.AdjustedPageNumber;
         var pageSize = request.AdjustedPageSize;
-        var query = new ListCountriesQuery(pageNumber, pageSize, request.Name);
+        var query = new ListCountriesQuery(pageNumber, pageSize, request.Name, request.SearchQuery);
 
         var (result, totalItemCount) = await _mediator.Send(query, cancellationToken);
 

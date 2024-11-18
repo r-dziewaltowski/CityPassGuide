@@ -25,6 +25,32 @@
 							"port": "{{port}}",
 							"path": [
 								"countries"
+							],
+							"query": [
+								{
+									"key": "pagenumber",
+									"value": "1",
+									"description": "1",
+									"disabled": true
+								},
+								{
+									"key": "pagesize",
+									"value": "10",
+									"description": "10",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "United Kingdom",
+									"description": "United Kingdom",
+									"disabled": true
+								},
+								{
+									"key": "searchQuery",
+									"value": "United",
+									"description": "United",
+									"disabled": true
+								}
 							]
 						}
 					},

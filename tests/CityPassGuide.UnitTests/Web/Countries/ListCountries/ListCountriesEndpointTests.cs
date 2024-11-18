@@ -25,6 +25,7 @@ public class ListCountriesEndpointTests
             PageNumber = 1,
             PageSize = 1,
             Name = "TestName",
+            SearchQuery = "TestSearchQuery"
         };
         var cancellationToken = new CancellationToken();
         var result = new List<CountryDto>();
@@ -39,7 +40,8 @@ public class ListCountriesEndpointTests
             .Send(Arg.Is<ListCountriesQuery>(query =>
                     query.PageNumber == request.PageNumber &&
                     query.PageSize == request.PageSize &&
-                    query.Name == request.Name),
+                    query.Name == request.Name &&
+                    query.SearchQuery == request.SearchQuery),
                 cancellationToken);
     }
 

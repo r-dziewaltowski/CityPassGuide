@@ -12,9 +12,10 @@ public class ListCountriesHandler(IReadRepository<Country> repository, IMapper m
     private readonly IReadRepository<Country> _repository = repository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<(Result<IEnumerable<CountryDto>>, int)> Handle(ListCountriesQuery query, CancellationToken cancellationToken)
+    public async Task<(Result<IEnumerable<CountryDto>>, int)> Handle(
+        ListCountriesQuery query, CancellationToken cancellationToken)
     {
-        var spec = new ListCountriesSpec(query.PageNumber, query.PageSize, query.Name);
+        var spec = new ListCountriesSpec(query.PageNumber, query.PageSize, query.Name, query.SearchQuery);
         var result = await _repository.ListAsync(spec, cancellationToken);
         var totalItemCount = await _repository.CountAsync(cancellationToken);
 

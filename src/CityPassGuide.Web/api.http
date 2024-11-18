@@ -2,8 +2,18 @@
 @host=https://localhost
 @port=57679
 
-// List countries
+@pageNumber=1
+@pageSize=10
+@name=United Kingdom
+@searchQuery=United
+
+// List countries (no params)
 GET {{host}}:{{port}}/countries
+
+###
+
+// List countries (all params)
+GET {{host}}:{{port}}/countries?pageNumber={{pageNumber}}&pageSize={{pageSize}}&name={{name}}&searchQuery={{searchQuery}}
 
 ###
 

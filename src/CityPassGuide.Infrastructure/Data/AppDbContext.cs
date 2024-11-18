@@ -20,6 +20,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDi
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        // Set database collation to be case-insensitive, SQLite by default is case-sensitive
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
         DataSeeder.SeedData(modelBuilder);
     }
 
