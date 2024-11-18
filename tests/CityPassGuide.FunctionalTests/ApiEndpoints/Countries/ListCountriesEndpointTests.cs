@@ -35,7 +35,7 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
         var response = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
 
         // Assert
-        response.Should().HaveCount(1);
+        response.Should().ContainSingle();
         response.First().Id.Should().Be(2);
     }
 
@@ -60,7 +60,7 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
         var response = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
 
         // Assert
-        response.Should().HaveCount(1);
+        response.Should().ContainSingle();
         response.First().Id.Should().Be(3);
     }
 
@@ -75,7 +75,7 @@ public class ListCountriesEndpointTests(CustomWebApplicationFactory<Program> fac
         var response = await Client.GetAndDeserializeAsync<IEnumerable<CountryDto>>(request);
 
         // Assert
-        response.Should().HaveCount(1);
+        response.Should().ContainSingle();
         response.First().Id.Should().Be(1);
     }
 

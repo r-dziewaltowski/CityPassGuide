@@ -64,7 +64,7 @@ public class ListCountriesEndpointTests
 
         // Assert
         response.Result.Should().BeOfType<Ok<IEnumerable<CountryDto>>>();
-        response.Result.As<Ok<IEnumerable<CountryDto>>>().Value.Should().BeSameAs(result);
+        response.Result.As<Ok<IEnumerable<CountryDto>>>().Value.Should().Equal(result);
     }
 
     [Fact]

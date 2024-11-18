@@ -102,6 +102,6 @@ public class ListCountriesSpecTests
         var result = listCountriesSpec.Evaluate(_entities);
 
         // Assert
-        result.Should().BeEquivalentTo(expectedResult);
+        result.Should().Equal(expectedResult);
     }
 }
